@@ -1,2 +1,3 @@
+<<<<<<< HEAD
 # theideacompany
 theideacompany
