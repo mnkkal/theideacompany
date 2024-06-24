@@ -21,7 +21,20 @@
             <span>{{ __('messages.roles') }}</span>
         </a>
     </li>
+    <li class="nav-item {{ Request::is('jobs*') ? 'active' : '' }}">
+        <a class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
+        <i class="fa fa-tasks me-4" aria-hidden="true"></i>
+            <span>{{ __('Jobs') }}</span>
+        </a>
+    </li>
+    <li class="nav-item {{ Request::is('job-applications*') ? 'active' : '' }}">
+        <a class="nav-link {{ Request::is('job-applications*') ? 'active' : '' }}" href="{{ route('job-applications.index') }}">
+            <i class="fa fa-envelope-open nav-icon me-4"></i>
+            <span>{{ __('Jobs Applications') }}</span>
+        </a>
+    </li>
 @endcan
+
 @can('manage_reported_users')
     <li class="nav-item {{ Request::is('reported-users*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('reported-users*') ? 'active' : '' }}"

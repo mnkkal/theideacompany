@@ -13,6 +13,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobApplicationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -164,4 +167,6 @@ require __DIR__.'/upgrade.php';
 
 Route::get('zoom/connect', [MeetingController::class, 'zoomConnect'])->name('zoom.connect');
 Route::any('zoom/callback', [MeetingController::class, 'zoomCallback']);
+Route::resource('jobs', JobController::class);
+Route::resource('job-applications', JobApplicationController::class);
 
