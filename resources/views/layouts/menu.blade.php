@@ -33,6 +33,12 @@
             <span>{{ __('Jobs Applications') }}</span>
         </a>
     </li>
+    <li class="nav-item {{ Request::is('subscriptions*') ? 'active' : '' }}">
+        <a class="nav-link {{ Request::is('subscriptions*') ? 'active' : '' }}" href="{{ route('subscriptions.index') }}">
+        <i class="fa fa-stack-exchange nav-icon me-4"></i>
+            <span>{{ __('Subscriptions') }}</span>
+        </a>
+    </li>
 @endcan
 
 @can('manage_reported_users')

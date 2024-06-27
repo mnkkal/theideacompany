@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\SubscriptionController;
 
 
 /*
@@ -169,4 +170,5 @@ Route::get('zoom/connect', [MeetingController::class, 'zoomConnect'])->name('zoo
 Route::any('zoom/callback', [MeetingController::class, 'zoomCallback']);
 Route::resource('jobs', JobController::class);
 Route::resource('job-applications', JobApplicationController::class);
+Route::resource('subscriptions', SubscriptionController::class);
 
