@@ -41,6 +41,15 @@
     </li>
 @endcan
 
+
+    <li class="nav-item {{ Request::is('investors*') ? 'active' : '' }}">
+        <a class="nav-link {{ Request::is('investors*') ? 'active' : '' }}" href="{{ route('investors.index') }}">
+            <i class="fa fa-briefcase nav-icon me-4"></i>
+            <span>{{ __('Investors') }}</span>
+        </a>
+    </li>
+
+
 @can('manage_reported_users')
     <li class="nav-item {{ Request::is('reported-users*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('reported-users*') ? 'active' : '' }}"

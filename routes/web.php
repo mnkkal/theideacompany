@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\InvestorController;
+use App\Http\Controllers\FounderController;
+
+
 
 
 /*
@@ -171,4 +175,7 @@ Route::any('zoom/callback', [MeetingController::class, 'zoomCallback']);
 Route::resource('jobs', JobController::class);
 Route::resource('job-applications', JobApplicationController::class);
 Route::resource('subscriptions', SubscriptionController::class);
+Route::resource('investors', InvestorController::class);
+Route::resource('founders', FounderController::class);
+
 
