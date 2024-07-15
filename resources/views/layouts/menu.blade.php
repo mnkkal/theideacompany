@@ -83,6 +83,15 @@
     </a>
 </li>
 @endcan
+@can('manage_front_cms')
+<li class="nav-item {{ Request::is('transactions*') ? 'active' : '' }}">
+    <a class="nav-link {{ Request::is('transactions*') ? 'active' : '' }}" href="{{ route('transactions.index') }}">
+        <i class="fa fa-home nav-icon me-4"></i>
+        <span>{{ __('Transactions') }}</span>
+    </a>
+</li>
+@endcan
+
 @can('manage_settings')
     <li class="nav-item {{ Request::is('settings*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('settings*') ? 'active' : '' }}" href="{{ route('settings.index') }}">

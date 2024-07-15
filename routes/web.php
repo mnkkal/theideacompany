@@ -18,6 +18,8 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\FounderController;
+use App\Http\Controllers\TransactionController;
+
 
 
 
@@ -177,5 +179,9 @@ Route::resource('job-applications', JobApplicationController::class);
 Route::resource('subscriptions', SubscriptionController::class);
 Route::resource('investors', InvestorController::class);
 Route::resource('founders', FounderController::class);
+
+Route::resource('transactions', TransactionController::class);
+
+
 
 
