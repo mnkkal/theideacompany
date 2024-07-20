@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
+use App\Models\GroupUser;
+use App\Models\ParentGroup;
 use App\Models\Setting;
 use App\Models\User;
 use App\Repositories\BlockUserRepository;
@@ -23,6 +26,7 @@ class ChatController extends AppBaseController
      */
     public function index(Request $request): View
     {
+        
         $conversationId = $request->get('conversationId');
         $data['conversationId'] = ! empty($conversationId) ? $conversationId : 0;
 
@@ -46,13 +50,16 @@ class ChatController extends AppBaseController
         $data['myContactIds'] = $myContactIds;
         $data['blockUserIds'] = $blockUserIds;
         $data['blockedByMeUserIds'] = $blockedByMeUserIds;
-
+      
+        $data['groups'] = ParentGroup::all()->pluck('name', 'id')->toArray();
+        $data['parentGroups'] = ParentGroup::with('groups')->get();
+      
         /** @var Setting $setting */
         $setting = Setting::where('key', 'notification_sound')->pluck('value', 'key')->toArray();
         if (isset($setting['notification_sound'])) {
             $data['notification_sound'] = app(Setting::class)->getNotificationSound($setting['notification_sound']);
         }
-
+        
         return view('chat.index')->with($data);
     }
 }

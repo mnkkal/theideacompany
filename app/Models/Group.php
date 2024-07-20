@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Str;
+use App\Models\ParentGroup;
 
 /**
  * App\Models\Group
@@ -96,7 +97,7 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'photo_url', 'group_type', 'privacy', 'created_by',
+        'name', 'description', 'photo_url', 'group_type', 'privacy', 'created_by', 'parent_group_id'
     ];
 
     public static $PATH = 'groups';
@@ -217,4 +218,11 @@ class Group extends Model
     {
         return $this->hasMany(LastConversation::class, 'group_id', 'id');
     }
+  
+
+    public function parentGroup()
+    {
+        return $this->belongsTo(ParentGroup::class, 'parent_group_id');
+    }
+   
 }

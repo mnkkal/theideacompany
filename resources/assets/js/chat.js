@@ -137,6 +137,7 @@ $(document).ready(function () {
                     noConversationYetEle.show();
                     noConversationYet = true;
                 }
+             
                 chatPeopleBodyEle.
                     append(latestConversations.map(prepareContacts).join(''));
 
@@ -1689,7 +1690,89 @@ $(document).ready(function () {
 
         return (lastDraftMsg != null) ? '<i class="fa fa-pencil" aria-hidden="true"></i> ' + getMessageByItsTypeForChatList(lastDraftMsg, 0) : false;
     };
-
+    // function prepareContacts(contact) {
+    //     let contactHtml = `
+    //         <div class="chat__person-box" data-id="${contact.contactId}" data-is_group="${contact.contact.is_group}" id="user-${contact.contactId}" data-is_my_contact="${checkForMyContact(contact.contactId)}">
+    //             <div class="position-relative chat__person-box-status-wrapper">
+    //                 ${!contact.contact.is_group && showStatus ? `<div class="chat__person-box-status ${contact.is_online ? 'chat__person-box-status--online' : 'chat__person-box-status--offline'}"></div>` : ''}
+    //                 <div class="chat__person-box-avtar chat__person-box-avtar--active">
+    //                     <img src="${contact.contactDetail.photo_url}" alt="<?php __('messages.person_image') ?>" class="user-avatar-img">
+    //                 </div>
+    //             </div>
+    //             <div class="chat__person-box-detail">
+    //                 <h5 class="mb-1 chat__person-box-name contact-name">${contact.contactDetail.name}
+    //                     <span class="contact-status">
+    //                     ${showUserStatus && checkUserStatus(contact.contactDetail) ? `<i class="nav-icon user-status-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="${contact.contactDetail.user_status.status}" data-original-title="${contact.contactDetail.user_status.status}">${contact.contactDetail.user_status.emoji}</i>` : ''}
+    //                     </span>
+    //                 </h5>
+    //                 <p class="mb-0 chat-message">${!getDraftMessage(contact.contactId) ? getMessageByItsTypeForChatList(contact.message, contact.message_type, contact.file_name) : getDraftMessage(contact.contactId)}</p>
+    //             </div>
+    //             <div class="chat__person-box-msg-time">
+    //                 <div class="chat__person-box-time">${getLocalDate(contact.created_at)}</div>
+    //                 <div class="chat__person-box-count ${contact.unread_count <= 0 ? 'd-none' : ''}">${contact.unread_count}</div>
+    //                 <div class="dropdown msgDropdown">
+    //                     <div class="chat-item-menu action-dropdown text-end pe-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+    //                     <i class="fa fa-ellipsis-v hide-ele text-logo-color"></i>
+    //                     </div>
+    //                    <div class="dropdown-menu dropdown-menu-right more-btn-conversation-item action-dropdown-menu">
+    //                        <a class="dropdown-item text-center chat__person-box-delete more-delete-option">
+    //                             <?php echo __('messages.chats.delete') ?>
+    //                         </a>
+    //                         <a class="dropdown-item text-center chat__person-box-archive">
+    //                             <?php echo __('messages.chats.archive_chat') ?>
+    //                         </a>
+    //                    </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     `;
+    //     return contactHtml;
+    // }
+    // window.prepareContacts = function (contact) {
+    //     let contactDetail = (contact.is_group) ? contact.group : contact.user;
+    //     let contactId = (contact.is_group) ? contact.group_id : contact.user_id;
+    //     let showStatus = true;
+    //     let showUserStatus = false;
+    
+    //     if (contact.is_group && contactDetail.removed_from_group) {
+    //         contactDetail = contact.group_details;
+    //     }
+    
+    //     if (($.inArray(contactId.toString(), myContactIds) != -1)) {
+    //         showUserStatus = true;
+    //     }
+    //     if ((contact.user != null && ($.inArray(parseInt(contactId), blockedUsersList) != -1)) || contact.is_group) {
+    //         showStatus = false;
+    //         showUserStatus = false;
+    //     }
+    
+    //     let template = $.templates('#tmplConversationsList');
+    //     let helpers = {
+    //         getMessageByItsTypeForChatList: getMessageByItsTypeForChatList,
+    //         getLocalDate: getLocalDate,
+    //         checkUserStatus: checkUserStatus,
+    //         checkForMyContact: checkForMyContact,
+    //         getDraftMessage: getDraftMessage,
+    //     };
+    
+    //     let data = {
+    //         showStatus: showStatus,
+    //         showUserStatus: showUserStatus,
+    //         contactId: contactId,
+    //         contact: contact,
+    //         contactDetail: contactDetail,
+    //         is_online: (!contact.is_group) ? contact.user.is_online : 0,
+    //     };
+    
+    //     let contactElementHtml = template.render(data, helpers);
+    
+    //     if (contact.unread_count > 0) {
+    //         totalUnreadConversations += 1;
+    //         updateUnreadMessageCount(0);
+    //     }
+    
+    //     return contactElementHtml;
+    // };
     window.prepareContacts = function (contact) {
         let contactDetail = (contact.is_group) ? contact.group : contact.user;
         let contactId = (contact.is_group) ? contact.group_id : contact.user_id;
@@ -1725,6 +1808,7 @@ $(document).ready(function () {
             contactDetail: contactDetail,
             is_online: (!contact.is_group) ? contact.user.is_online : 0,
         };
+   
         let contactElementHtml = template.render(data, helpers);
 
         if (contact.unread_count > 0) {
@@ -4792,6 +4876,7 @@ $(document).on('click', '.load-more-conversation', function () {
                 if (data.success) {
                     $('#infyLoader').hide();
                     let latestConversations = data.data.conversations;
+                   
                     chatPeopleBodyEle.
                         append(latestConversations.map(prepareContacts).
                             join(''));

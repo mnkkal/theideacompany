@@ -18,6 +18,10 @@
                         {!! Form::label('name', __('messages.group.name').':',['class' => 'login-group__sub-title']) !!}<span class="red">*</span>
                         {!! Form::text('name', null, ['class' => 'form-control login-group__input', 'required', 'id' => 'groupName','placeholder'=>__('messages.group.name')]) !!}
                     </div>
+                    <div class="col-12 mb-3">
+                        {!! Form::label('parent_group_id', __('Parent Group').':',['class' => 'login-group__sub-title']) !!}
+                        {!! Form::select('parent_group_id', $groups, null, ['class' => 'form-control', 'id' => 'parentGroupId', 'placeholder' => __('Select Parent Group')]) !!}
+                    </div>
                     <div class="col-12 d-flex edit-profile-image mb-3">
                         <div class="ps-0 edit-profile-btn">
                             {!! Form::label('photo', __('messages.group_icon').':', ['class' => 'login-group__sub-title']) !!}

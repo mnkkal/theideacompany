@@ -20,12 +20,14 @@ return new class extends Migration
             $table->integer('group_type')->comment('1 => Open (Anyone can send message), 2 => Close (Only Admin can send message) ');
             $table->unsignedInteger('created_by');
             $table->timestamps();
-
+            $table->unsignedBigInteger('parent_group_id')->nullable()->after('id');
+            $table->foreign('parent_group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('created_by')
                 ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
     }
 
     /**

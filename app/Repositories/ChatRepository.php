@@ -121,7 +121,7 @@ class ChatRepository extends BaseRepository
 
             $bindings = array_merge($subQuery->getBindings(), $groupSubQuery->getBindings());
             $groupSubQueryStr = $groupSubQuery->toSql();
-            $relations = ['group.lastConversations.conversation', 'user.userStatus', 'group.usersWithTrashed'];
+            $relations = ['group.lastConversations.conversation', 'user.userStatus', 'group.usersWithTrashed','group.parentGroup'];
         } else {
             $bindings = $subQuery->getBindings();
             $relations = ['user.userStatus'];
@@ -188,8 +188,16 @@ class ChatRepository extends BaseRepository
             $chatList[$conversation->id]['to_id'] = $newConversation->to_id;
             $chatList[$conversation->id]['unread_message'] = 0;
             $chatList[$conversation->id]['group_details'] = $lastConversations[getLoggedInUserId()]->group_details;
+           
         }
-
+        
+        // $groupedChatList = [];
+        // foreach ($chatList as $chat) {
+        //     $parentGroupData = $chat['group']['parent_group_id']  ? $chat['group']->parent_group : 'no_group';
+        //     $chatList['parentGroupName'][] = $parentGroupId;
+        // }
+        // dd($chatList);
+        
         return array_values($chatList);
     }
 

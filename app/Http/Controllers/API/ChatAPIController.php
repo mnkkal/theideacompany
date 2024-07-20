@@ -37,6 +37,7 @@ class ChatAPIController extends AppBaseController
     public function getLatestConversations(Request $request): JsonResponse
     {
         $input = $request->all();
+        
         $conversations = $this->chatRepository->getLatestConversations($input);
 
         return $this->sendResponse(['conversations' => $conversations], 'Conversations retrieved successfully.');

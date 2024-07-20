@@ -100,4 +100,8 @@ class GroupUser extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    public function group(): HasOne
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
 }

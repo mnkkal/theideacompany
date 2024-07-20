@@ -6,6 +6,15 @@
     </a>
 </li>
 @endcan
+@can('manage_conversations')
+<li class="nav-item {{ Request::is('parent-groups*') ? 'active' : '' }}">
+    <a class="nav-link {{ Request::is('parent-groups*') ? 'active' : '' }}" href="{{ url('parent-groups')  }}">
+        <i class="fa fa-commenting nav-icon me-4"></i>
+        <span>{{ __('Parent Groups') }}</span>
+    </a>
+</li>
+@endcan
+
 @can('manage_users')
     <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('users*') ? 'active' : '' }}" href="{{ route('users.index') }}">

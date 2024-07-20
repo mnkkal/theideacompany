@@ -19,6 +19,9 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\FounderController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ParentGroupController;
+
+
 
 
 
@@ -181,7 +184,6 @@ Route::resource('investors', InvestorController::class);
 Route::resource('founders', FounderController::class);
 
 Route::resource('transactions', TransactionController::class);
-
-
+Route::resource('parent-groups', ParentGroupController::class);
 
 

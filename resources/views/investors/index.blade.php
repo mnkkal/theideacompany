@@ -24,21 +24,27 @@
                                 <div class="pull-left page__heading me-3 my-2">
                                     {{ __('Investors') }}
                                 </div>
-                                <button type="button" class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block" data-bs-toggle="modal" data-bs-target="#create_user_modal">{{ __('New Jobs') }}</button>
+                                <a href="{{ route('investors.create') }}">
+                                    <button type="button" class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block">
+                                        {{ __('New Investor') }}
+                                    </button>
+                                </a>
                             </div>
                             <div class="filter-container user-filter align-self-sm-center align-self-end ms-auto">
-                                <div class="me-2 my-2 user-select2 ms-sm-0 ms-auto"></div>
-                                <div class="me-sm-2 my-2 user-select2 ms-sm-0 ms-auto"></div>
+                                <div class="me-2 my-2 user-select2 ms-sm-0 ms-auto">
+                                    <!-- Additional filter content can be placed here -->
+                                </div>
+                                <div class="me-sm-2 my-2 user-select2 ms-sm-0 ms-auto">
+                                    <!-- Additional filter content can be placed here -->
+                                </div>
                                 <a href="{{ route('investors.create') }}">
                                     <button type="button" class="my-2 pull-right btn btn-primary new-user-btn filter-container__btn ms-sm-0 ms-auto">
-                                    Create New Investor
+                                        Create New Investor
                                     </button>
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                           
-                            
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -67,7 +73,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="pull-right me-3"></div>
+                            <div class="pull-right me-3">
+                                <!-- Pagination or other content can be placed here -->
+                            </div>
                         </div>
                     </div>
                 </div>
