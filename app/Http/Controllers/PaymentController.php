@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -87,11 +88,54 @@ class PaymentController extends Controller
 
         if (hash_equals($expectedSignature, $signature)) {
             // Handle the webhook payload
-            // Example: $event = $payload['event'];
+            $event = $payload['event'];
+            $payment = $payload['payload']['payment']['entity'];
+
+            switch ($event) {
+                case 'payment.captured':
+                    $this->handlePaymentCaptured($payment);
+                    break;
+                case 'payment.failed':
+                    $this->handlePaymentFailed($payment);
+                    break;
+                // Add more cases here for different event types if needed
+                default:
+                    Log::info('Unhandled event type: ' . $event);
+                    break;
+            }
 
             return response()->json(['status' => 'success'], 200);
         } else {
             return response()->json(['status' => 'invalid signature'], 400);
+        }
+    }
+
+    protected function handlePaymentCaptured($payment)
+    {
+        // Process the captured payment
+        // For example, you might update your order status in the database
+        Log::info('Payment captured: ' . json_encode($payment));
+        
+        // Assuming you have an Order model linked with Razorpay order_id
+        $order = Order::where('razorpay_order_id', $payment['order_id'])->first();
+        if ($order) {
+            $order->status = 'paid';
+            $order->razorpay_payment_id = $payment['id'];
+            $order->save();
+        }
+    }
+
+    protected function handlePaymentFailed($payment)
+    {
+        // Process the failed payment
+        // For example, you might log the failure or update order status
+        Log::info('Payment failed: ' . json_encode($payment));
+        
+        // Assuming you have an Order model linked with Razorpay order_id
+        $order = Order::where('razorpay_order_id', $payment['order_id'])->first();
+        if ($order) {
+            $order->status = 'failed';
+            $order->save();
         }
     }
 
