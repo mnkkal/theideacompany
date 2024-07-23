@@ -18,6 +18,7 @@
                         <span class="h3 mb-0">{{ __('messages.conversations') }}</span>
                         <div class="d-flex chat__people-wrapper-btn-group ms-1">
                             <i class="nav-icon fa fa-bars align-top chat__people-wrapper-bar"></i>
+                        @can('create_chat_groups')
                             @if($enableGroupSetting == 1)
                                 @if(Auth::user()->hasRole('Admin'))
                                     <div
@@ -41,6 +42,8 @@
                                     </div>
                                 @endif
                             @endif
+                        @endcan
+                            @can('create_new_chat')
                             <div class="chat__people-wrapper-button d-flex align-items-center" data-bs-toggle="modal"
                                  data-bs-target="#addNewChat">
                                 <i class="nav-icon remove-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -48,7 +51,9 @@
                                         src="{{asset('assets/icons/bubble-chat.png')}}" width="30" height="30"></i>
                             </div>
                             <i class="nav-icon fa fa-times align-top chat__people-close-bar d-sm-none d-block align-self-center ms-2"></i>
+                            @endcan
                         </div>
+                        
                     </div>
                     <div class="chat__search-wrapper">
                         <div class="chat__search clearfix chat__search--responsive">

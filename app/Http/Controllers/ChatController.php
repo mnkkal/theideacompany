@@ -13,6 +13,9 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Class ChatController
@@ -24,42 +27,47 @@ class ChatController extends AppBaseController
      *
      * @return Factory|Application|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request):View|RedirectResponse
     {
         
-        $conversationId = $request->get('conversationId');
-        $data['conversationId'] = ! empty($conversationId) ? $conversationId : 0;
+        if(Auth::user()->hasPermissionTo('manage_conversations')){
+           
+            $conversationId = $request->get('conversationId');
+            $data['conversationId'] = ! empty($conversationId) ? $conversationId : 0;
 
-        /** @var UserRepository $userRepository */
-        $userRepository = app(UserRepository::class);
-        /** @var BlockUserRepository $blockUserRepository */
-        $myContactIds = $userRepository->myContactIds();
+            /** @var UserRepository $userRepository */
+            $userRepository = app(UserRepository::class);
+            /** @var BlockUserRepository $blockUserRepository */
+            $myContactIds = $userRepository->myContactIds();
 
-        /** @var BlockUserRepository $blockUserRepository */
-        $blockUserRepository = app(BlockUserRepository::class);
-        [$blockUserIds, $blockedByMeUserIds] = $blockUserRepository->blockedUserIds();
+            /** @var BlockUserRepository $blockUserRepository */
+            $blockUserRepository = app(BlockUserRepository::class);
+            [$blockUserIds, $blockedByMeUserIds] = $blockUserRepository->blockedUserIds();
 
-        $data['users'] = User::toBase()
-            ->limit(50)
-            ->orderBy('name')
-            ->select(['name', 'id'])
-            ->pluck('name', 'id')
-            ->except(getLoggedInUserId());
-        $data['enableGroupSetting'] = isGroupChatEnabled();
-        $data['membersCanAddGroup'] = canMemberAddGroup();
-        $data['myContactIds'] = $myContactIds;
-        $data['blockUserIds'] = $blockUserIds;
-        $data['blockedByMeUserIds'] = $blockedByMeUserIds;
-      
-        $data['groups'] = ParentGroup::all()->pluck('name', 'id')->toArray();
-        $data['parentGroups'] = ParentGroup::with('groups')->get();
-      
-        /** @var Setting $setting */
-        $setting = Setting::where('key', 'notification_sound')->pluck('value', 'key')->toArray();
-        if (isset($setting['notification_sound'])) {
-            $data['notification_sound'] = app(Setting::class)->getNotificationSound($setting['notification_sound']);
-        }
+            $data['users'] = User::toBase()
+                ->limit(50)
+                ->orderBy('name')
+                ->select(['name', 'id'])
+                ->pluck('name', 'id')
+                ->except(getLoggedInUserId());
+            $data['enableGroupSetting'] = isGroupChatEnabled();
+            $data['membersCanAddGroup'] = canMemberAddGroup();
+            $data['myContactIds'] = $myContactIds;
+            $data['blockUserIds'] = $blockUserIds;
+            $data['blockedByMeUserIds'] = $blockedByMeUserIds;
         
-        return view('chat.index')->with($data);
+            $data['groups'] = ParentGroup::all()->pluck('name', 'id')->toArray();
+            $data['parentGroups'] = ParentGroup::with('groups')->get();
+        
+            /** @var Setting $setting */
+            $setting = Setting::where('key', 'notification_sound')->pluck('value', 'key')->toArray();
+            if (isset($setting['notification_sound'])) {
+                $data['notification_sound'] = app(Setting::class)->getNotificationSound($setting['notification_sound']);
+            }
+            
+            return view('chat.index')->with($data);
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 }

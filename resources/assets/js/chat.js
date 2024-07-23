@@ -264,6 +264,7 @@ $(document).ready(function () {
                     /** Do not show chat input box if user is blocked */
                     if (!groupOrUserObj.hasOwnProperty('is_blocked') ||
                         !groupOrUserObj.is_blocked) {
+
                         conversation += chatSendArea;
                     } else {
                         conversation += hdnTextMessage;

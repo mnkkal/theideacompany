@@ -66,21 +66,22 @@ class RoleRepository extends BaseRepository
      */
     public function updateRole($input, $role): Role
     {
-        try {
+       
+        //try {
             DB::beginTransaction();
             /** @var Role $role */
             $role->update($input);
             if (isset($input['permissions'])) {
                 $role->syncPermissions($input['permissions']);
-            } else {
-                $role->revokePermissionTo($role->getAllPermissions());
-            }
+            } //else {
+               // $role->revokePermissionTo($role->getAllPermissions());
+            //}
             DB::commit();
 
             return $role;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new UnprocessableEntityHttpException($e->getMessage());
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     throw new UnprocessableEntityHttpException($e->getMessage());
+        // }
     }
 }

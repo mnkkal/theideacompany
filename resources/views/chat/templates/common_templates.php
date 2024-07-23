@@ -1,5 +1,10 @@
+
 <script id="tmplChatSendArea" type="text/x-jsrender">
+
+
 <div class="chat__area-text">
+<?php if(Auth::user()->hasPermissionTo('can_chat')){ ?>
+
     <div class="w-100 flex-1 chat__area-form ">
         <input type="text" id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>">
     </div>
@@ -14,9 +19,11 @@
             <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
         </button>
     </div>
+<?php } ?>
 </div>
 
 </script>
+
 
 <script id="tmplUserNewStatus" type="text/x-jsrender">
 <i class="nav-icon user-status-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="{{:status}}" data-original-title="{{:status}}">

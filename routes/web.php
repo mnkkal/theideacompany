@@ -40,7 +40,7 @@ use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     return view('home.index');
-});
+})->name('home');
 
 Auth::routes();
 Route::get('activate', [AuthController::class, 'verifyAccount']);
@@ -55,7 +55,7 @@ Route::get('/users/impersonate-logout',
 Route::middleware(['user.activated', 'auth'])->group(function () {
     //view routes
     Route::get('/conversations',
-        [ChatController::class, 'index'])->name('conversations')->middleware('permission:manage_conversations');
+        [ChatController::class, 'index'])->name('conversations');
     Route::get('profile', [UserController::class, 'getProfile']);
     Route::get('logout', [LoginController::class, 'logout']);
 

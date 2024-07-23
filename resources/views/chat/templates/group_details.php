@@ -124,6 +124,7 @@
             </div>
 
     <div class="chat-profile__divider"></div>
+    <?php if(Auth::user()->hasPermissionTo('add_chat_member')){ ?>
     {{if privacy === 2 && my_role === 2 && !removed_from_group}}
     <div class="chat-profile__column pb-0">
         <a href="#" class='btn btn-primary btn-add-members' data-group-id="{{:id}}"><?php echo trans('messages.chats.add_members') ?></a>
@@ -133,6 +134,7 @@
         <a href="#" class='btn btn-primary btn-add-members' data-group-id="{{:id}}"><?php echo trans('messages.chats.add_members') ?></a>
    </div>
     {{/if}}
+    <?php } ?>
     {{if !group_deleted_by_owner && removed_from_group || (created_by === logged_in_user_id)}}
     <div class="chat-profile__column pt-1">
        <a href="#" class='btn btn-danger btn-delete-group' data-group-id="{{:id}}"><?php echo trans('messages.group.delete_group') ?></a>

@@ -6,7 +6,7 @@
     </a>
 </li>
 @endcan
-@can('manage_conversations')
+@can('manage_parent_groups')
 <li class="nav-item {{ Request::is('parent-groups*') ? 'active' : '' }}">
     <a class="nav-link {{ Request::is('parent-groups*') ? 'active' : '' }}" href="{{ url('parent-groups')  }}">
         <i class="fa fa-commenting nav-icon me-4"></i>
@@ -49,7 +49,7 @@
         </a>
     </li>
 @endcan
-
+@can('manage_investors')
 
     <li class="nav-item {{ Request::is('investors*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('investors*') ? 'active' : '' }}" href="{{ route('investors.index') }}">
@@ -58,7 +58,7 @@
         </a>
     </li>
 
-
+@endcan
 @can('manage_reported_users')
     <li class="nav-item {{ Request::is('reported-users*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('reported-users*') ? 'active' : '' }}"

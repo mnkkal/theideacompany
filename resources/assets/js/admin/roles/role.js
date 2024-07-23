@@ -47,9 +47,7 @@ $(document).ready(function () {
                     if (row.is_default) {
                         return '';
                     }
-                    if(row.id == AuthUserRoleId){
-                        return `<button title="Delete" class="index__btn btn btn-ghost-danger btn-sm delete-btn" data-id="${row.id}"><i class="cui-trash action-icon"></i></button>`;
-                    }
+                   
                     return `<div class="d-flex justify-content-center align-items-center"> <a title="Edit" class="index__btn btn btn-ghost-success btn-sm edit-btn mr-1" href="${route('roles.edit',row.id)}">
                             <i class="cui-pencil action-icon"></i></a>
                             <button title="Delete" class="index__btn btn btn-ghost-danger btn-sm delete-btn" data-id="${row.id}"><i class="cui-trash action-icon"></i></button>

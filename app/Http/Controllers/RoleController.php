@@ -17,6 +17,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class RoleController extends AppBaseController
 {
@@ -47,9 +49,13 @@ class RoleController extends AppBaseController
      */
     public function create(): View
     {
-        $permissions = Permission::toBase();
+        if(Auth::user()->hasPermissionTo('manage_roles')){
+            $permissions = Permission::toBase();
 
-        return view('roles.create', compact('permissions'));
+            return view('roles.create', compact('permissions'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     /**
@@ -62,6 +68,7 @@ class RoleController extends AppBaseController
         Flash::success(__('messages.new_keys.role_saved_successfully'));
 
         return redirect()->route('roles.index');
+      
     }
 
     /**
@@ -78,28 +85,51 @@ class RoleController extends AppBaseController
      */
     public function edit(Role $role)
     {
-        if ($role->is_default) {
-            return redirect()->back();
-        }
+        
+        if(Auth::user()->hasPermissionTo('manage_roles')){
+       
         $permissions = Permission::toBase();
 
         return view('roles.edit', compact('permissions', 'role'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     /**
      * @throws Exception
      */
-    public function update(Role $role, UpdateRoleRequest $request): RedirectResponse
+    public function update(Request $request, $roleId)
     {
-        if ($role->is_default) {
-            Flash::error('You can not update default role.');
+        if (Auth::user()->hasPermissionTo('manage_roles')) {
+        // Find the role by its ID
+            $role = Role::find($roleId);
 
-            return redirect()->back();
+            if (!$role) {
+                return redirect()->back()->with(
+                    'error', 'Role not found.'
+                );
+            }
+
+            // Update the role's name
+            $role->name = $request->input('name');
+
+            // Save the updated role
+            $role->save();
+
+            // Sync the role's permissions
+            $role->syncPermissions($request->input('permissions'));
+            Flash::success(__('Role updated successfully'));
+            // Redirect back with a success message
+            return redirect()->route('roles.index')->with(
+                'success', 'Role updated successfully'
+            );
+        } else {
+            // Redirect back with an error message if the user does not have permission
+            return redirect()->back()->with(
+                'error', 'Sorry! You do not have permission to access this page!'
+            );
         }
-        $this->roleRepository->updateRole($request->all(), $role);
-        Flash::success(__('messages.new_keys.role_update'));
-
-        return redirect()->route('roles.index');
     }
 
     /**
@@ -107,14 +137,18 @@ class RoleController extends AppBaseController
      */
     public function destroy(Role $role): JsonResponse
     {
-        if ($role->is_default) {
-            return $this->sendError(__('messages.new_keys.you_can_not_delete_default_role'));
-        }
-        if ($role->users->count() > 0) {
-            return $this->sendError(__('messages.new_keys.role_is_already_assigned'));
-        }
-        $this->roleRepository->delete($role->id);
+        if(Auth::user()->hasPermissionTo('manage_roles')){
+            if ($role->is_default) {
+                return $this->sendError(__('messages.new_keys.you_can_not_delete_default_role'));
+            }
+            if ($role->users->count() > 0) {
+                return $this->sendError(__('messages.new_keys.role_is_already_assigned'));
+            }
+            $this->roleRepository->delete($role->id);
 
-        return $this->sendSuccess(__('messages.new_keys.role_deleted'));
+            return $this->sendSuccess(__('messages.new_keys.role_deleted'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 }
