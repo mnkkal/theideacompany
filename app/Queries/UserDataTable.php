@@ -15,7 +15,7 @@ class UserDataTable
 {
     public function get(array $input = []): Builder
     {
-        $users = User::with(['roles']);
+        $users = User::with(['roles','permissions']);
         $users->when(
             isset($input['filter_user']),
             function (Builder $q) use ($input) {

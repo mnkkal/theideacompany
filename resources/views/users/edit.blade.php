@@ -118,6 +118,19 @@
                         </div>
                     </div>
                     <!-- Submit Field -->
+                    <div class="form-group">
+                        {!! Form::label('permissions', __('messages.permissions').':') !!}
+                        <div class="form-group row login-group__sub-title" id="permissionsContainer">
+                            @foreach($permissions as $permission)
+                                <div class="form-group col-sm-6 login-group__sub-title">
+                                    {!! Form::checkbox('permissions[]', $permission->name, isset($user) && $user->permissions->contains('name', $permission->name), ['id' => 'permission_'.$permission->id]) !!}
+                                    {!! Form::label('permission_'.$permission->id, $permission->display_name) !!}
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    
                     <div class="text-start form-group mb-0 col-sm-12">
                         {{ Form::button(__('messages.save') , ['type'=>'submit','class' => 'btn btn-primary','id'=>'editBtnSave','data-loading-text'=>"<span class='spinner-border spinner-border-sm'></span> " .__('messages.processing')]) }}
                         <button type="button" class="btn btn-secondary ms-1"

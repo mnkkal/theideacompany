@@ -180,6 +180,7 @@ $(document).ready(function () {
             success: function (result) {
                 if (result.success) {
                     let user = result.data.user;
+                    let permissions = result.data.permissions;
                     $('#edit_user_id').val(user.id);
                     $('#edit_name').val(htmlSpecialCharsDecode(user.name));
                     $('#edit_email').val(user.email);
@@ -201,6 +202,18 @@ $(document).ready(function () {
                     } else {
                         $('#editPrivacyPrivate').prop('checked', true);
                     }
+                    $('#permissionsContainer').empty();
+    
+                    permissions.forEach(permission => {
+                        let checked = user.permissions.some(userPermission => userPermission.name === permission.name) ? 'checked' : '';
+                        let permissionHtml = `
+                            <div class="form-group col-sm-6 login-group__sub-title">
+                                <input type="checkbox" name="permissions[]" value="${permission.name}" ${checked} id="permission_${permission.id}">
+                                <label for="permission_${permission.id}">${permission.display_name}</label>
+                            </div>
+                        `;
+                        $('#permissionsContainer').append(permissionHtml);
+                    });
                 }
             },
             error: function (error) {

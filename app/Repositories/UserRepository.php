@@ -81,6 +81,7 @@ class UserRepository extends BaseRepository
 
     public function update($input, $id)
     {
+       
         /** @var User $user */
         $user = User::findOrFail($id);
         try {
@@ -88,7 +89,9 @@ class UserRepository extends BaseRepository
 
             $this->assignRoles($user, $input);
             $this->updateProfilePhoto($user, $input);
-
+            if(isset($input['permissions']) &&  count($input['permissions']) > 0){
+                $user->syncPermissions($input['permissions']);
+            }
             return $user;
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());

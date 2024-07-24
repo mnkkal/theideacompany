@@ -21,6 +21,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Response;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends AppBaseController
 {
@@ -53,9 +54,12 @@ class UserController extends AppBaseController
             return Datatables::of((new UserDataTable())->get($request->only(['filter_user', 'privacy_filter'])))->make(true);
         }
         $roles = Role::pluck('name', 'id')->toArray();
-
+        
+       
+        $permissions = Permission::all();
         return view('users.index')->with([
             'roles' => $roles,
+            'permissions' => $permissions
         ]);
     }
 
@@ -101,10 +105,11 @@ class UserController extends AppBaseController
      */
     public function edit(User $user): JsonResponse
     {
-        $user->roles;
+       
+        $user = User::with(['roles', 'permissions'])->findOrFail($user->id);
         $user = $user->apiObj();
-
-        return $this->sendResponse(['user' => $user], 'User retrieved successfully.');
+        $permissions = Permission::all();
+        return $this->sendResponse(['user' => $user, 'permissions'=> $permissions], 'User retrieved successfully.');
     }
 
     /**

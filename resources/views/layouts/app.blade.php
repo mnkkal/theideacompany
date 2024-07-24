@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{ mix('assets/css/style.css') }}">
     @yield('css')
     <link rel="stylesheet" href="{{ mix('assets/css/custom-style.css') }}">
+
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
