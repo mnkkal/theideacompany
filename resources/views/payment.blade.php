@@ -6,8 +6,14 @@
 <body>
     <form action="/payment" method="POST">
         @csrf
-        <label for="amount">Amount:</label>
-        <input type="text" name="amount" id="amount" required>
+        <label for="amount">Plan Id:</label>
+        <input type="text" name="subscription_plan_id" id="amount" required>
+        <label for="amount">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <label for="amount">Contact:</label>
+        <input type="text" name="contact" id="contact" required>
+        <label for="amount">Address:</label>
+        <input type="text" name="address" id="address" required>
         <button type="submit">Pay</button>
     </form>
 

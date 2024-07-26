@@ -26,18 +26,27 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+        $subplan = Subscription::where('id', $request->subscription_plan_id)->first();
         $orderData = [
             'receipt'         => 'order_rcptid_11',
-            'amount'          => $request->amount * 100, 
+            'amount'          =>  $subplan->price * 100, 
             'currency'        => 'INR',
+            'notes'           => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'address' => $request->address,
+                'subscription_plan_id' => $request->subscription_plan_id,
+            ]
         ];
 
         $order = $this->razorpay->order->create($orderData);
 
         $orderId = $order['id'];
+        $user = User::where('email', $request->email)->first();
         $newOrder = Order::create([
-            'subscription_plan_id' => $request->subscription_plan_id,
-            'user_id' => $request->user_id,
+            'subscription_plan_id' => $subplan->id,
+            'user_id' => $user->id,
             'razorpay_order_id' => $orderId,
             'status' => 'created',
         ]);
@@ -54,6 +63,7 @@ class PaymentController extends Controller
             "notes"             => [
                 "address"           => $request->address,
                 "merchant_order_id" => $orderId,
+              
             ],
             "theme"             => [
                 "color"             => "#F37254"
@@ -68,7 +78,7 @@ class PaymentController extends Controller
     public function success(Request $request)
     {
         
-        try {
+       try {
             $attributes = [
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
@@ -76,24 +86,29 @@ class PaymentController extends Controller
             ];
 
             $this->razorpay->utility->verifyPaymentSignature($attributes);
-            $user = User::where('email', $request->email)->first();
-            
+            $orderData = $this->razorpay->order->fetch($request->razorpay_order_id);
+            // Update order status to 'paid'
+            $order = Order::where('razorpay_order_id', $request->razorpay_order_id)->first();
+            if ($order) {
+                $order->update(['status' => 'paid']);
+            }
+            $user = User::where('email', $orderData['notes']['email'])->first();
             RazorpayTransaction::create([
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
                 'razorpay_signature' => $request->razorpay_signature,
-                'name' => $request->name,
-                'email' => $request->email,
-                'contact' => $request->contact,
-                'address' => $request->address,
-                'amount' => $request->amount,
+                'name' => $orderData['notes']['name'] ?? null,
+                'email' => $orderData['notes']['email'] ?? null,
+                'contact' => $orderData['notes']['contact'] ?? null,
+                'address' => $orderData['notes']['address'] ?? null,
+                'amount' => $orderData['amount']/100,
             ]);
             Transaction::create([
-                'user_id' => $user->id,
-                'subscription_plan_id' => $request->subscription_plan_id,
-                'ref'=> $request->razorpay_payment_id,
+                'user_id' => $user->id ?? null,
+                'subscription_plan_id' => $orderData['notes']['subscription_plan_id'] ?? null,
+                'ref'=> $request->razorpay_payment_id ?? null,
                 'status'=>'successful',
-                'amount' => $request->amount,
+                'amount' => $orderData['amount']/100 ?? null,
             ]);
            
             return view('success');
