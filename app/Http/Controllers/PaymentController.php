@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\RazorpayTransaction;
+use App\Models\Subscription;
 
 class PaymentController extends Controller
 {
@@ -33,7 +35,12 @@ class PaymentController extends Controller
         $order = $this->razorpay->order->create($orderData);
 
         $orderId = $order['id'];
-
+        $newOrder = Order::create([
+            'subscription_plan_id' => $request->subscription_plan_id,
+            'user_id' => $request->user_id,
+            'razorpay_order_id' => $orderId,
+            'status' => 'created',
+        ]);
         $data = [
             "key"               => env('RAZORPAY_KEY_ID'),
             "amount"            => $orderData['amount'],
@@ -70,6 +77,7 @@ class PaymentController extends Controller
 
             $this->razorpay->utility->verifyPaymentSignature($attributes);
             $user = User::where('email', $request->email)->first();
+            
             RazorpayTransaction::create([
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
@@ -87,13 +95,7 @@ class PaymentController extends Controller
                 'status'=>'successful',
                 'amount' => $request->amount,
             ]);
-            $validatedData = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'subscription_plan_id' => 'nullable|exists:subscriptions,id',
-                'amount' => 'required|numeric',
-                'status' => 'required|string',
-                'processed' => 'boolean',
-            ]);
+           
             return view('success');
         } catch (\Exception $e) {
             return redirect()->route('payment.failure');
