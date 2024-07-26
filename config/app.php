@@ -168,7 +168,7 @@ return [
     'providers' => ServiceProvider::defaultProviders()->merge([
         Laravel\Socialite\SocialiteServiceProvider::class,
         Berkayk\OneSignal\OneSignalServiceProvider::class,
-
+        App\Providers\RazorpayServiceProvider::class,
         /*
          * Package Service Providers...
          */

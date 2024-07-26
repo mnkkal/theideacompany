@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('ref',1024)->nullable();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('subscription_plan_id')->nullable()->index();
             $table->double('amount', 8, 2);
@@ -20,9 +21,6 @@ return new class extends Migration
             $table->boolean('processed')->default(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('subscription_plan_id')->references('id')->on('subscriptions')->onDelete('set null');
-           
         });
     }
 

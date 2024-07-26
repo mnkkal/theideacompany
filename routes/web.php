@@ -187,11 +187,7 @@ Route::resource('transactions', TransactionController::class);
 Route::resource('parent-groups', ParentGroupController::class);
 
 
-
-Route::get('payment', [PaymentController::class, 'paymentPage'])->name('payment.page');
-Route::post('payment', [PaymentController::class, 'createOrder'])->name('payment.create');
-Route::post('payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
-Route::post('payment/webhook', [PaymentController::class, 'handleWebhook'])->name('payment.webhook');
-
-
-
+Route::get('payment', [PaymentController::class, 'index']);
+Route::post('payment', [PaymentController::class, 'store']);
+Route::any('payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::any('payment/failure', [PaymentController::class, 'failure'])->name('payment.failure');

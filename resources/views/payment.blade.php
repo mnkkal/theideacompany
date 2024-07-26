@@ -1,27 +1,40 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <h2>Pay with Razorpay</h2>
-    <form action="{{ route('payment.create') }}" method="POST">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Razorpay Payment Gateway</title>
+</head>
+<body>
+    <form action="/payment" method="POST">
         @csrf
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="contact">Contact</label>
-            <input type="text" name="contact" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <textarea name="address" class="form-control" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Pay Now</button>
+        <label for="amount">Amount:</label>
+        <input type="text" name="amount" id="amount" required>
+        <button type="submit">Pay</button>
     </form>
-</div>
-@endsection
+
+    @if(isset($orderId))
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ env('RAZORPAY_KEY_ID') }}",
+            "amount": "{{ old('amount') * 100 }}", 
+            "currency": "INR",
+            "name": "Your Company Name",
+            "description": "Test Transaction",
+            "order_id": "{{ $orderId }}",
+            "handler": function (response){
+                window.location.href = '/payment/success?razorpay_payment_id=' + response.razorpay_payment_id + '&razorpay_order_id=' + response.razorpay_order_id + '&razorpay_signature=' + response.razorpay_signature;
+            },
+            "prefill": {
+                "name": "Your Name",
+                "email": "Your Email"
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    </script>
+    @endif
+</body>
+</html>
