@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('razorpay_transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('razorpay_order_id');
-            $table->string('razorpay_payment_id');
-            $table->string('razorpay_signature');
-            $table->string('name');
-            $table->string('email');
-            $table->string('contact');
-            $table->string('address');
-            $table->integer('amount');
+            $table->string('razorpay_order_id')->nullable();
+            $table->string('razorpay_payment_id')->nullable();
+            $table->string('razorpay_signature')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('amount')->nullable();;
             $table->timestamps();
         });
     }
