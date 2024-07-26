@@ -112,6 +112,17 @@ class GroupAPIController extends AppBaseController
 
         return $this->sendResponse(['group' => $group, 'conversation' => $conversation], __('messages.new_keys.member_added'));
     }
+    public function addMembersCron($group, $user)
+    {
+       
+        $users = [$user];
+
+        /** @var User $addedMembers */
+        [$addedMembers, $conversation] = $this->groupRepository->addMembersToGroup($group, $users);
+       
+
+        return true;
+    }
 
     /**
      * @throws Exception

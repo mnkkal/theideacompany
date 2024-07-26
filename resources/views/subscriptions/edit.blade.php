@@ -77,6 +77,34 @@
                                 <textarea type="text" class="form-control" name="description"  required>{{ $subscription->description }}</textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                        <label for="chat_group">Chat Group:</label>
+                        <div class="form-group row login-group__sub-title" id="chat_groupContainer">
+                            <!-- Replace with dynamic PHP code to loop through $chat_group array -->
+                            <?php foreach ($chat_group as $group): ?>
+                                <div class="form-group col-sm-6 login-group__sub-title">
+                                    <input type="checkbox" name="chat_group[]" value="<?php echo htmlspecialchars($group->id); ?>" id="chat_group_<?php echo htmlspecialchars($group->id); ?>"
+                                    <?php if (isset($subscription->chat_group) && in_array($group->id, json_decode($subscription->chat_group))): ?> checked <?php endif; ?>>
+                                    <label for="chat_group_<?php echo htmlspecialchars($group->id); ?>"><?php echo htmlspecialchars($group->name); ?></label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label for="permissions">Permissions:</label>
+                            <div class="form-group row login-group__sub-title" id="permissionsContainer">
+                                <!-- Replace with dynamic PHP code to loop through $permissions array -->
+                                <?php foreach ($permissions as $permission): ?>
+                                    <div class="form-group col-sm-6 login-group__sub-title">
+                                        <input type="checkbox" name="permissions[]" value="<?php echo htmlspecialchars($permission->name); ?>" id="permission_<?php echo htmlspecialchars($permission->id); ?>"
+                                        <?php  if (isset($subscription->permissions) && in_array($permission->name, json_decode($subscription->permissions))): ?> checked <?php endif; ?>>
+                                        <label for="permission_<?php echo htmlspecialchars($permission->id); ?>"><?php echo htmlspecialchars($permission->display_name); ?></label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
                         <!--end col--> 
                         <div class="col-lg-12">
                             <div class="">

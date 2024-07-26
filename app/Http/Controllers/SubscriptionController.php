@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
+use Spatie\Permission\Models\Permission;
 
 class SubscriptionController extends Controller
 {
@@ -23,7 +25,9 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
-        return view('subscriptions.create');
+        $chat_group = Group::all();
+        $permissions = Permission::all();
+        return view('subscriptions.create', compact('permissions', 'chat_group'));
     }
 
     /**
@@ -31,13 +35,23 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
         ]);
-
-        Subscription::create($request->all());
+      $subplan =   new Subscription();
+      $subplan->name = $request->name;
+      $subplan->description = $request->description;
+      $subplan->price = $request->price;
+    if(count($request->chat_group) > 0){
+        $subplan->chat_group = json_encode($request->chat_group);
+    }
+    if(count($request->permissions) > 0){
+        $subplan->permissions = json_encode($request->permissions);
+    }
+      $subplan->save();
 
         return redirect()->route('subscriptions.index')->with('success', 'Subscription created successfully.');
     }
@@ -55,7 +69,9 @@ class SubscriptionController extends Controller
      */
     public function edit(Subscription $subscription)
     {
-        return view('subscriptions.edit', compact('subscription'));
+        $chat_group = Group::all();
+        $permissions = Permission::all();
+        return view('subscriptions.edit', compact('subscription','permissions', 'chat_group'));
     }
 
     /**
@@ -68,8 +84,16 @@ class SubscriptionController extends Controller
             'description' => 'nullable',
             'price' => 'required|numeric',
         ]);
-
-        $subscription->update($request->all());
+        $subscription->name = $request->name;
+        $subscription->description = $request->description;
+        $subscription->price = $request->price;
+        if(count($request->chat_group) > 0){
+            $subscription->chat_group = json_encode($request->chat_group);
+        }
+        if(count($request->permissions) > 0){
+           $subscription->permissions = json_encode($request->permissions);
+        }
+        $subscription->save();
 
         return redirect()->route('subscriptions.index')->with('success', 'Subscription updated successfully.');
     }

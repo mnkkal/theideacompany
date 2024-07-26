@@ -76,7 +76,8 @@ class GroupRepository extends BaseRepository
 
             $msgInput = [
                 'to_id' => $group->id,
-                'message' => Auth::user()->name.' created group "'.$group->name.'"',
+                'message' => (Auth::check() ? Auth::user()->name : "System") . " created group " . $group->name,
+
                 'is_group' => true,
                 'message_type' => Conversation::MESSAGE_TYPE_BADGES,
             ];
@@ -105,7 +106,7 @@ class GroupRepository extends BaseRepository
             if (! empty($changes)) {
                 $msgInput = [
                     'to_id' => $group->id,
-                    'message' => 'Group details updated by '.Auth::user()->name,
+                    'message' => 'Group details updated by '.(Auth::check() ? Auth::user()->name : "System"),
                     'is_group' => true,
                     'message_type' => Conversation::MESSAGE_TYPE_BADGES,
                 ];
@@ -158,7 +159,7 @@ class GroupRepository extends BaseRepository
             GroupUser::create([
                 'user_id' => $user->id,
                 'group_id' => $group->id,
-                'added_by' => getLoggedInUserId(),
+                'added_by' => getLoggedInUserId() ?? 1,
                 'role' => $group->created_by == $user->id ? GroupUser::ROLE_ADMIN : GroupUser::ROLE_MEMBER,
             ]);
 
@@ -175,7 +176,7 @@ class GroupRepository extends BaseRepository
         $newUserNames = substr($newUserNames, 0, strlen($newUserNames) - 2);
         $msgInput = [
             'to_id' => $group->id,
-            'message' => Auth::user()->name." added : $newUserNames",
+            'message' => (Auth::check() ? Auth::user()->name : "System")." added : $newUserNames",
             'is_group' => true,
             'message_type' => Conversation::MESSAGE_TYPE_BADGES,
             'add_members' => true,
@@ -272,7 +273,7 @@ class GroupRepository extends BaseRepository
     {
         $msgInput = [
             'to_id' => $group->id,
-            'message' => Auth::user()->name.' left the group',
+            'message' => (Auth::check() ? Auth::user()->name : "System").' left the group',
             'is_group' => true,
             'message_type' => Conversation::MESSAGE_TYPE_BADGES,
         ];
@@ -311,7 +312,7 @@ class GroupRepository extends BaseRepository
 
         $msgInput = [
             'to_id' => $group->id,
-            'message' => Auth::user()->name.' deleted this group',
+            'message' => (Auth::check() ? Auth::user()->name : "System").' deleted this group',
             'is_group' => true,
             'message_type' => Conversation::MESSAGE_TYPE_BADGES,
         ];
@@ -361,7 +362,7 @@ class GroupRepository extends BaseRepository
 
         $msgInput = [
             'to_id' => $group->id,
-            'message' => Auth::user()->name.' assigned admin role to '.$member->name,
+            'message' => (Auth::check() ? Auth::user()->name : "System").' assigned admin role to '.$member->name,
             'is_group' => true,
             'message_type' => Conversation::MESSAGE_TYPE_BADGES,
         ];
@@ -387,7 +388,7 @@ class GroupRepository extends BaseRepository
 
         $msgInput = [
             'to_id' => $group->id,
-            'message' => Auth::user()->name." dismissed $member->name from admin",
+            'message' => (Auth::check() ? Auth::user()->name : "System")." dismissed $member->name from admin",
             'is_group' => true,
             'message_type' => Conversation::MESSAGE_TYPE_BADGES,
         ];

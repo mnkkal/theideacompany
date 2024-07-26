@@ -8,6 +8,8 @@ use App\Models\UserSubscription;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Http\Controllers\API\GroupAPIController;
+use App\Models\Group;
 
 class CheckSuccessfulTransactions extends Command
 {
@@ -34,6 +36,7 @@ class CheckSuccessfulTransactions extends Command
 
         foreach ($transactions as $transaction) {
             // Check if transaction corresponds to a subscription plan
+            $subPlan = Subscription::where('id', $transaction->subscription_plan_id)->first();
             if ($transaction->subscription_plan_id) {
                 $UserSubscription = UserSubscription::create([
                     'user_id' => $transaction->user_id,
@@ -49,11 +52,22 @@ class CheckSuccessfulTransactions extends Command
 
                 
                 $user = User::find($transaction->user_id);
-                $user->givePermissionTo('manage_conversations');
+                if(count(json_decode($subPlan->permissions)) > 0){
+                    foreach (json_decode($subPlan->permissions) as $permission) {
+                        $user->givePermissionTo($permission);
+                    }
+                }
 
-                // Mark the transaction as processed
+                
                 $transaction->processed = true;
                 $transaction->save();
+                if(count(json_decode($subPlan->chat_group)) > 0){
+                    foreach (json_decode($subPlan->chat_group) as $chat_group_id) {
+                        $group = Group::where('id',$chat_group_id)->first();
+                        $groupApi = new GroupAPIController(app('App\Repositories\GroupRepository'));
+                        $groupApi->addMembersCron($group, $user->id);
+                    }
+                }
             }
         }
 

@@ -288,10 +288,10 @@ class ChatRepository extends BaseRepository
 
     public function groupMessageValidations(array $groupUsers): bool
     {
-        // If user is removed/leave from group, then her can not able to send message in group
-        if (! in_array(getLoggedInUserId(), $groupUsers)) {
-            throw new UnprocessableEntityHttpException(__('messages.new_keys.active_member_of_this_group_can_send_message'));
-        }
+        // // If user is removed/leave from group, then her can not able to send message in group
+        // if (! in_array(getLoggedInUserId(), $groupUsers)) {
+        //     throw new UnprocessableEntityHttpException(__('messages.new_keys.active_member_of_this_group_can_send_message'));
+        // }
 
         return true;
     }
@@ -384,11 +384,11 @@ class ChatRepository extends BaseRepository
 
         $conversation['group']['id'] = $groupInfo['id'];
         $conversation['group']['name'] = $groupInfo['name'];
-        $conversation['group']['photo_url'] = $groupInfo['photo_url'];
-        $conversation['sender']['id'] = $senderInfo['id'];
-        $conversation['sender']['photo_url'] = $senderInfo['photo_url'];
-        $conversation['sender']['name'] = $senderInfo['name'];
-        $conversation['sender']['role_name'] = $senderInfo['role_name'];
+        $conversation['group']['photo_url'] = $groupInfo['photo_url']?? null;
+        $conversation['sender']['id'] = $senderInfo['id'] ?? 1;
+        $conversation['sender']['photo_url'] = $senderInfo['photo_url']??null;
+        $conversation['sender']['name'] = $senderInfo['name']?? null;
+        $conversation['sender']['role_name'] = $senderInfo['role_name']?? null;
         $conversation['type'] = Group::NEW_GROUP_MESSAGE_ARRIVED;
 
         return $conversation;
