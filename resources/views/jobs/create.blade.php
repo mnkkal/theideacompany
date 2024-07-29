@@ -48,23 +48,71 @@
                             <form action="{{ route('jobs.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="title">Title:</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Title">
+                                    <label for="job_post">JOB POST:</label>
+                                    <input type="text" name="job_post" class="form-control" placeholder="JOB POST">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Description:</label>
-                                    <textarea name="description" class="form-control" placeholder="Description"></textarea>
+                                    <label for="email">Email:</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="company">Company:</label>
-                                    <input type="text" name="company" class="form-control" placeholder="Company">
+                                    <label for="company_name">COMPANY NAME:</label>
+                                    <input type="text" name="company_name" class="form-control" placeholder="COMPANY NAME">
+                                </div>
+                                <fieldset>
+                                <label>JOB TYPE:</label><br>
+                                    <label>
+                                        <input type="checkbox" name="job_type[]" value="internship"> Internship
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="job_type[]" value="work_from_home"> Work From Home
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="job_type[]" value="part_time"> Part Time
+                                    </label><br>
+                                    <label>
+                                        <input type="checkbox" name="job_type[]" value="full_time"> Full Time
+                                    </label><br>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label for="doj">DURATION OF JOB:</label>
+                                    <input type="text" name="doj" class="form-control" placeholder="DURATION OF JOB">
                                 </div>
                                 <div class="form-group">
-                                    <label for="location">Location:</label>
-                                    <input type="text" name="location" class="form-control" placeholder="Location">
+                                    <label for="apply_by">APPLY BY:</label>
+                                    <input type="date" name="apply_by" class="form-control" placeholder="APPLY BY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="salary">STIPEND/SALARY:</label>
+                                    <input type="text" name="salary" class="form-control" placeholder="STIPEND/SALARY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hiring_from">HIRING FROM:</label>
+                                    <input type="text" name="hiring_from" class="form-control" placeholder="HIRING FROM">
+                                </div>
+                                <div class="form-group">
+                                    <label for="about_company">ABOUT THE COMPANY:</label>
+                                    <textarea name="about_company" class="form-control" placeholder="ABOUT THE COMPANY"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="about_job">ABOUT THE JOB:</label>
+                                    <textarea name="about_job" class="form-control" placeholder="ABOUT THE JOB"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="who_can_apply">WHO CAN APPLY:</label>
+                                    <input type="text" name="who_can_apply" class="form-control" placeholder="WHO CAN APPLY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="skill_required">SKILL REQUIRED:</label>
+                                    <input type="text" name="skill_required" class="form-control" placeholder="SKILL REQUIRED">
+                                </div>
+                                <div class="form-group">
+                                    <label for="add_perks_of_job">ADD PERKS OF THE JOB:</label>
+                                    <input type="text" name="add_perks_of_job" class="form-control" placeholder="ADD PERKS OF THE JOB">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
+
                         </div>
                         </div>
                     </div>

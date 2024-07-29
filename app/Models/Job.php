@@ -11,8 +11,24 @@ class Job extends Model
     /**
      * @var string
      */
-    protected $table = 'jobs';
+    protected $table = 'job_post';
     protected $fillable = [
-        'title', 'description', 'company', 'location', 'experience', 'notice_period', 'current_job', 'resume'
+        'job_post',
+        'email',
+        'company_name',
+        'job_type',
+        'doj',
+        'apply_by',
+        'salary',
+        'hiring_from',
+        'about_company',
+        'about_job',
+        'who_can_apply',
+        'skill_required',
+        'add_perks_of_job',
+    ];
+
+    protected $casts = [
+        'job_type' => 'array',
     ];
 }

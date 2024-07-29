@@ -54,7 +54,7 @@
             <label for="job_id">Job:</label>
             <select name="job_id" class="form-control">
                 @foreach ($jobs as $job)
-                    <option value="{{ $job->id }}" {{ isset($jobApplication) && $jobApplication->job_id == $job->id ? 'selected' : '' }}>{{ $job->title }}</option>
+                    <option value="{{ $job->id }}" {{ isset($jobApplication) && $jobApplication->job_id == $job->id ? 'selected' : '' }}>{{ $job->job_post }}</option>
                 @endforeach
             </select>
         </div>

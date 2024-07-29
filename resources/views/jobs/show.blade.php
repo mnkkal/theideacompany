@@ -25,7 +25,7 @@
                             </div>
                             <div class="filter-container user-filter align-self-sm-center align-self-end ms-auto">
                                 <div class="me-2 my-2 user-select2 ms-sm-0 ms-auto">
-                                  
+                                <a href="{{ route('jobs.index') }}" class="btn btn-secondary mb-3">Back to Jobs</a>
                                 </div>
                                 <div class="me-sm-2 my-2 user-select2 ms-sm-0 ms-auto">
                                   
@@ -34,29 +34,26 @@
                             </div>
                         </div>
                         <div class="card-body">
-                        <div class="container">
-
-        <div>
-            <strong>Title:</strong>
-            {{ $job->title }}
-        </div>
-        <div>
-            <strong>Description:</strong>
-            {{ $job->description }}
-        </div>
-        <div>
-            <strong>Company:</strong>
-            {{ $job->company }}
-        </div>
-        <div>
-            <strong>Location:</strong>
-            {{ $job->location }}
-            <br>
-            <br>
-        </div>
-        <a href="{{ route('jobs.index') }}" class="btn btn-primary">Back</a>
-    </div>
-                        </div>
+                <h5 class="card-title">{{ $job->job_post }}</h5>
+                <p class="card-text"><strong>Email:</strong> {{ $job->email }}</p>
+                <p class="card-text"><strong>Company Name:</strong> {{ $job->company_name }}</p>
+                <p class="card-text"><strong>Job Type:</strong> 
+                    @foreach(json_decode($job->job_type) as $type)
+                        <span class="badge badge-primary">{{ ucfirst(str_replace('_', ' ', $type)) }}</span>
+                    @endforeach
+                </p>
+                <p class="card-text"><strong>Duration of Job:</strong> {{ $job->doj }}</p>
+                <p class="card-text"><strong>Apply By:</strong> {{ $job->apply_by }}</p>
+                <p class="card-text"><strong>Salary:</strong> {{ $job->salary }}</p>
+                <p class="card-text"><strong>Hiring From:</strong> {{ $job->hiring_from }}</p>
+                <p class="card-text"><strong>About Company:</strong> {{ $job->about_company }}</p>
+                <p class="card-text"><strong>About Job:</strong> {{ $job->about_job }}</p>
+                <p class="card-text"><strong>Who Can Apply:</strong> {{ $job->who_can_apply }}</p>
+                <p class="card-text"><strong>Skill Required:</strong> {{ $job->skill_required }}</p>
+                <p class="card-text"><strong>Add Perks of Job:</strong> {{ $job->add_perks_of_job }}</p>
+                <a href="{{ route('job-applications.apply', $job->id) }}" class="btn btn-primary mt-3">Apply</a>
+            </div>
+           
                     </div>
                 </div>
             </div>

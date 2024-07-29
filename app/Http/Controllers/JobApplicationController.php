@@ -20,6 +20,11 @@ class JobApplicationController extends Controller
         $jobs = Job::all();
         return view('job_applications.create', compact('jobs'));
     }
+    public function apply($id)
+    {
+        $jobs = Job::where('id', $id)->get();
+        return view('job_applications.create', compact('jobs'));
+    }
 
     public function store(Request $request)
     {

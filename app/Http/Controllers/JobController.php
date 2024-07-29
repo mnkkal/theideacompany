@@ -23,34 +23,41 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'company' => 'required',
-            'location' => 'required',
-           
-           
-           
-            
+            'job_post' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'company_name' => 'required|string|max:255',
+            'job_type' => 'required|array',
+            'job_type.*' => 'in:internship,work_from_home,part_time,full_time',
+            'doj' => 'required|string|max:255',
+            'apply_by' => 'required|date',
+            'salary' => 'required|string|max:255',
+            'hiring_from' => 'required|string|max:255',
+            'about_company' => 'required|string',
+            'about_job' => 'required|string',
+            'who_can_apply' => 'required|string|max:255',
+            'skill_required' => 'required|string|max:255',
+            'add_perks_of_job' => 'required|string|max:255',
         ]);
-
-        if ($request->hasFile('resume')) {
-            $resumePath = $request->file('resume')->store('resumes');
-        }
-
-        Job::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'company' => $request->company,
-            'location' => $request->location,
-            'experience' => $request->experience,
-            'notice_period' => $request->notice_period,
-            'current_job' => $request->current_job,
-            'resume' => $resumePath ?? null,
-        ]);
-
-        return redirect()->route('jobs.index')
-                         ->with('success', 'Job created successfully.');
+    
+        $job = new Job();
+        $job->job_post = $request->job_post;
+        $job->email = $request->email;
+        $job->company_name = $request->company_name;
+        $job->job_type = json_encode($request->job_type);
+        $job->doj = $request->doj;
+        $job->apply_by = $request->apply_by;
+        $job->salary = $request->salary;
+        $job->hiring_from = $request->hiring_from;
+        $job->about_company = $request->about_company;
+        $job->about_job = $request->about_job;
+        $job->who_can_apply = $request->who_can_apply;
+        $job->skill_required = $request->skill_required;
+        $job->add_perks_of_job = $request->add_perks_of_job;
+        $job->save();
+    
+        return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
     }
+    
 
     public function show(Job $job)
     {
@@ -63,37 +70,42 @@ class JobController extends Controller
     }
 
     public function update(Request $request, Job $job)
-    {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'company' => 'required',
-            'location' => 'required',
-           
-        ]);
+{
+    $request->validate([
+        'job_post' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'company_name' => 'required|string|max:255',
+        'job_type' => 'required|array',
+        'job_type.*' => 'in:internship,work_from_home,part_time,full_time',
+        'doj' => 'required|string|max:255',
+        'apply_by' => 'required|date',
+        'salary' => 'required|string|max:255',
+        'hiring_from' => 'required|string|max:255',
+        'about_company' => 'required|string',
+        'about_job' => 'required|string',
+        'who_can_apply' => 'required|string|max:255',
+        'skill_required' => 'required|string|max:255',
+        'add_perks_of_job' => 'required|string|max:255',
+    ]);
 
-        if ($request->hasFile('resume')) {
-            
-            if ($job->resume) {
-                Storage::delete($job->resume);
-            }
-            $resumePath = $request->file('resume')->store('resumes');
-        }
+    $job->update([
+        'job_post' => $request->job_post,
+        'email' => $request->email,
+        'company_name' => $request->company_name,
+        'job_type' => json_encode($request->job_type),
+        'doj' => $request->doj,
+        'apply_by' => $request->apply_by,
+        'salary' => $request->salary,
+        'hiring_from' => $request->hiring_from,
+        'about_company' => $request->about_company,
+        'about_job' => $request->about_job,
+        'who_can_apply' => $request->who_can_apply,
+        'skill_required' => $request->skill_required,
+        'add_perks_of_job' => $request->add_perks_of_job,
+    ]);
 
-        $job->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'company' => $request->company,
-            'location' => $request->location,
-            'experience' => $request->experience,
-            'notice_period' => $request->notice_period,
-            'current_job' => $request->current_job,
-            'resume' => $resumePath ?? $job->resume,
-        ]);
-
-        return redirect()->route('jobs.index')
-                         ->with('success', 'Job updated successfully.');
-    }
+    return redirect()->route('jobs.index')->with('success', 'Job updated successfully.');
+}
 
     public function destroy(Job $job)
     {

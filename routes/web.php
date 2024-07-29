@@ -179,6 +179,7 @@ Route::get('zoom/connect', [MeetingController::class, 'zoomConnect'])->name('zoo
 Route::any('zoom/callback', [MeetingController::class, 'zoomCallback']);
 Route::resource('jobs', JobController::class);
 Route::resource('job-applications', JobApplicationController::class);
+Route::get('job-applications/apply/{id}', [JobApplicationController::class, 'apply'])->name('job-applications.apply');
 Route::resource('subscriptions', SubscriptionController::class);
 Route::resource('investors', InvestorController::class);
 Route::resource('founders', FounderController::class);
