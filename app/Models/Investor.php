@@ -9,6 +9,8 @@ class Investor extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'company_logo',
+        'sector',
         'problem_opportunity',
         'solution_technology',
         'current_stage',

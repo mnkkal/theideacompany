@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('resume')->nullable();
             $table->timestamps();
 
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('job_id')->references('id')->on('job_post')->onDelete('cascade');
         });
     }
 

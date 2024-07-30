@@ -96,7 +96,30 @@
 
                                 <!-- Section 2 - Concept of Venture -->
                                 <div class="form-section">
-                                    <h4>Concept of Venture</h4>
+                                    <h4>Name of venture </h4>
+                                    <div class="form-group mb-3">
+                                        <label for="company_logo">Company Logo</label>
+                                        <input type="file" class="form-control" name="company_logo" id="company_logo" accept="image/*">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="sector">Sector</label>
+                                        <select class="form-control" name="sector" id="sector">
+                                            <option value="Financial services">Financial services</option>
+                                            <option value="Retail">Retail</option>
+                                            <option value="Consumer goods/fmcg">Consumer goods/FMCG</option>
+                                            <option value="Healthcare">Healthcare</option>
+                                            <option value="Software services">Software services</option>
+                                            <option value="Transportation and logistics">Transportation and logistics</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Media/entertainment">Media / Entertainment</option>
+                                            <option value="Consumer niche services">Consumer niche services</option>
+                                            <option value="Hospitality">Hospitality</option>
+                                            <option value="AI/VR">AI / VR</option>
+                                            <option value="Agriculture and tech">Agriculture and tech</option>
+                                            <option value="Aeronautics and aerospace tech">Aeronautics and aerospace tech</option>
+                                            <option value="Defense">Defense</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group mb-3">
                                         <label for="problem_opportunity">Problem/Opportunity</label>
                                         <textarea class="form-control" name="problem_opportunity" id="problem_opportunity" placeholder="Problem/Opportunity"></textarea>

@@ -27,9 +27,9 @@ class JobApplicationController extends Controller
     }
 
     public function store(Request $request)
-    {
+    { 
         $request->validate([
-            'job_id' => 'required|exists:jobs,id',
+            'job_id' => 'required|exists:job_post,id',
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
@@ -72,7 +72,7 @@ class JobApplicationController extends Controller
     public function update(Request $request, JobApplication $jobApplication)
     {
         $request->validate([
-            'job_id' => 'required|exists:jobs,id',
+            'job_id' => 'required|exists:job_post,id',
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',

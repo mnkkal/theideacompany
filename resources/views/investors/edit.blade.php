@@ -58,7 +58,36 @@
 
                                 <!-- Section 2 - Concept of Venture -->
                                 <div class="form-section mb-3">
-                                    <h4>Concept of Venture</h4>
+                                <h4>Name of venture </h4>
+                                <div class="form-group mb-3">
+                                    <label for="company_logo">Company Logo</label>
+                                    @if($investor->company_logo)
+                                        <div>
+                                            <img src="{{ asset('storage/' . $investor->company_logo) }}" alt="Company Logo" width="100">
+                                        </div>
+                                    @endif
+                                    <input type="file" class="form-control" name="company_logo" id="company_logo" accept="image/*">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="sector">Sector</label>
+                                    <select class="form-control" name="sector" id="sector">
+                                        <option value="Financial services" {{ $investor->sector == 'Financial services' ? 'selected' : '' }}>Financial services</option>
+                                        <option value="Retail" {{ $investor->sector == 'Retail' ? 'selected' : '' }}>Retail</option>
+                                        <option value="Consumer goods/fmcg" {{ $investor->sector == 'Consumer goods/fmcg' ? 'selected' : '' }}>Consumer goods/FMCG</option>
+                                        <option value="Healthcare" {{ $investor->sector == 'Healthcare' ? 'selected' : '' }}>Healthcare</option>
+                                        <option value="Software services" {{ $investor->sector == 'Software services' ? 'selected' : '' }}>Software services</option>
+                                        <option value="Transportation and logistics" {{ $investor->sector == 'Transportation and logistics' ? 'selected' : '' }}>Transportation and logistics</option>
+                                        <option value="Education" {{ $investor->sector == 'Education' ? 'selected' : '' }}>Education</option>
+                                        <option value="Media/entertainment" {{ $investor->sector == 'Media/entertainment' ? 'selected' : '' }}>Media / Entertainment</option>
+                                        <option value="Consumer niche services" {{ $investor->sector == 'Consumer niche services' ? 'selected' : '' }}>Consumer niche services</option>
+                                        <option value="Hospitality" {{ $investor->sector == 'Hospitality' ? 'selected' : '' }}>Hospitality</option>
+                                        <option value="AI/VR" {{ $investor->sector == 'AI/VR' ? 'selected' : '' }}>AI / VR</option>
+                                        <option value="Agriculture and tech" {{ $investor->sector == 'Agriculture and tech' ? 'selected' : '' }}>Agriculture and tech</option>
+                                        <option value="Aeronautics and aerospace tech" {{ $investor->sector == 'Aeronautics and aerospace tech' ? 'selected' : '' }}>Aeronautics and aerospace tech</option>
+                                        <option value="Defense" {{ $investor->sector == 'Defense' ? 'selected' : '' }}>Defense</option>
+                                    </select>
+                                </div>
                                     <div class="form-group mb-3">
                                         <label for="problem_opportunity">Problem/Opportunity</label>
                                         <textarea class="form-control" name="problem_opportunity" id="problem_opportunity" placeholder="Problem/Opportunity">{{ $investor->problem_opportunity }}</textarea>

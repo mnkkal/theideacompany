@@ -22,11 +22,11 @@
                         <div class="card-header page-header flex-wrap align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="user-header d-flex align-items-center justify-content-between">
                                 <div class="pull-left page__heading me-3 my-2">
-                                    {{ __('Investors') }}
+                                    {{ __('Form Of Pitch') }}
                                 </div>
                                 <a href="{{ route('investors.create') }}">
                                     <button type="button" class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block">
-                                        {{ __('New Investor') }}
+                                        {{ __('New Form Of Pitch') }}
                                     </button>
                                 </a>
                             </div>

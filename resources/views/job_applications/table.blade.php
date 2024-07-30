@@ -2,7 +2,7 @@
     <thead>
     <tr>
     <th>No</th>
-            <th>Job Title</th>
+            <th>Job Post</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -13,7 +13,7 @@
     @foreach ($applications as $application)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $application->job->title }}</td>
+                <td>{{ $application->job->job_post }}</td>
                 <td>{{ $application->name }}</td>
                 <td>{{ $application->email }}</td>
                 <td>{{ $application->phone }}</td>

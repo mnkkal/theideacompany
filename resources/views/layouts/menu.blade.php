@@ -54,7 +54,7 @@
     <li class="nav-item {{ Request::is('investors*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('investors*') ? 'active' : '' }}" href="{{ route('investors.index') }}">
             <i class="fa fa-briefcase nav-icon me-4"></i>
-            <span>{{ __('Investors') }}</span>
+            <span>{{ __('Form Of Pitch') }}</span>
         </a>
     </li>
 

@@ -20,8 +20,14 @@ class InvestorController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           
+        ]);
         $data = $request->all();
-        
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('logos');
+        }
         if ($request->hasFile('product_demo')) {
             $data['product_demo'] = $request->file('product_demo')->store('product_demos');
         }
@@ -58,7 +64,9 @@ class InvestorController extends Controller
     {
         $investor = Investor::findOrFail($id);
         $data = $request->all();
-
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('logos');
+        }
         if ($request->hasFile('product_demo')) {
             $data['product_demo'] = $request->file('product_demo')->store('product_demos');
         }
