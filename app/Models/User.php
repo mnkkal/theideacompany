@@ -389,4 +389,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class);
     }
+    public function pitchLikesDislikes()
+    {
+        return $this->hasMany(PitchUserLikesDislike::class);
+    }
 }

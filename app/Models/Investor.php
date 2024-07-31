@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PitchUserLikesDislike;
 
 class Investor extends Model
 {
@@ -34,5 +35,9 @@ class Investor extends Model
     public function founders()
     {
         return $this->hasMany(Founder::class);
+    }
+    public function userLikesDislikes()
+    {
+        return $this->hasMany(PitchUserLikesDislike::class, 'pitch_id');
     }
 }

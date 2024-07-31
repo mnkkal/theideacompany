@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Create Investor') }}
+    {{ __('Create Pitch') }}
 @endsection
 
 @section('page_css')
@@ -46,7 +46,7 @@
                     <div class="card-header page-header flex-wrap align-items-sm-center align-items-start flex-sm-row flex-column">
                         <div class="user-header d-flex align-items-center justify-content-between">
                             <div class="pull-left page__heading me-3 my-2">
-                                {{ __('Create Investor') }}
+                                {{ __('Create Pitch') }}
                             </div>
                         </div>
                         <div class="filter-container user-filter align-self-sm-center align-self-end ms-auto">

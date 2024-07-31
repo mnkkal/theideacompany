@@ -28,8 +28,9 @@ class DashboardController extends Controller
         //                 return $this->employerDashboard();
          //   default:
            
-                return $this->welcomeDashboard();
+        //    return $this->welcomeDashboard();
         //}
+        return $this->startupDashboard();
     }
     protected function superAdminDashboard()
     {
@@ -42,28 +43,29 @@ class DashboardController extends Controller
 
     protected function investorDashboard()
     {
-        $pitches = Pitch::where('active', true)->get();
+        $pitches = Investor::All();
 
         return view('dashboards.investor', compact('pitches'));
     }
 
     protected function startupDashboard()
     {
-        $pitches = Auth::user()->pitches()->where('active', true)->get();
+        $pitches = Investor::where('created_by', auth()->user()->id)->get();
+       
 
         return view('dashboards.startup', compact('pitches'));
     }
     protected function employeeDashboard()
     {
         // Add logic to fetch data relevant to employees
-        $tasks = Task::where('assigned_to', Auth::id())->get(); // Example: fetching tasks assigned to the employee
+        $tasks = Task::where('assigned_to', Auth::id())->get(); 
 
         return view('dashboards.employee', compact('tasks'));
     }
     protected function employerDashboard()
     {
         // Add logic to fetch data relevant to employees
-        $tasks = Task::where('assigned_to', Auth::id())->get(); // Example: fetching tasks assigned to the employee
+        $tasks = Task::where('assigned_to', Auth::id())->get(); 
 
         return view('dashboards.employee', compact('tasks'));
     }

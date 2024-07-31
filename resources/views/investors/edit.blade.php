@@ -63,7 +63,7 @@
                                     <label for="company_logo">Company Logo</label>
                                     @if($investor->company_logo)
                                         <div>
-                                            <img src="{{ asset('storage/' . $investor->company_logo) }}" alt="Company Logo" width="100">
+                                            <img src="{{ asset('uploads/' . $investor->company_logo) }}" alt="Company Logo" width="70" height="40">
                                         </div>
                                     @endif
                                     <input type="file" class="form-control" name="company_logo" id="company_logo" accept="image/*">

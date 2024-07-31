@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Investor;
+use App\Models\PitchUserLikesDislike;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class InvestorController extends Controller
 {
     public function index()
     {
-        $investors = Investor::all();
+        $investors = Investor::with('userLikesDislikes')->get();
         return view('investors.index', compact('investors'));
     }
 
@@ -37,7 +40,7 @@ class InvestorController extends Controller
         if ($request->hasFile('certificate_incorporation')) {
             $data['certificate_incorporation'] = $request->file('certificate_incorporation')->store('certificates');
         }
-    
+        $data['created_by'] = auth()->user()->id;
         $investor = Investor::create($data);
     
         foreach ($request->founders as $founder) {
@@ -56,8 +59,16 @@ class InvestorController extends Controller
 
     public function edit($id)
     {
-        $investor = Investor::findOrFail($id);
-        return view('investors.edit', compact('investor'));
+        if(Auth::user()->hasPermissionTo('manage_investors')){
+            $investor = Investor::findOrFail($id);
+            return view('investors.edit', compact('investor'));
+        }else if (Investor::where('id', $id)->where('created_by', auth()->user()->id)->exists()){
+            $investor = Investor::where('id', $id)->where('created_by', auth()->user()->id)->first();
+            return view('investors.edit', compact('investor'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
+        
     }
 
     public function update(Request $request, $id)
@@ -76,7 +87,7 @@ class InvestorController extends Controller
         if ($request->hasFile('certificate_incorporation')) {
             $data['certificate_incorporation'] = $request->file('certificate_incorporation')->store('certificates');
         }
-
+       
         $investor->update($data);
 
         // Delete old founders and add new ones
@@ -93,6 +104,70 @@ class InvestorController extends Controller
         $investor = Investor::findOrFail($id);
         $investor->delete();
         return redirect()->route('investors.index');
+    }
+    public function likes($id)
+    {
+        $pitch = Investor::findOrFail($id); // Assuming Investor model is used for pitches
+        $userId = Auth::id();
+
+        // Check if the user has already liked or disliked the pitch
+        $existing = PitchUserLikesDislike::where('user_id', $userId)->where('pitch_id', $id)->first();
+
+        if ($existing) {
+            if ($existing->liked) {
+                return redirect()->route('dashboard.index')->with('error', 'You have already liked this pitch.');
+            } elseif ($existing->disliked) {
+                // If the user has disliked, remove the dislike and add a like
+                $existing->disliked = null;
+                $existing->liked = true;
+                $pitch->dislikes--;
+                $pitch->likes++;
+                $existing->save();
+            }
+        } else {
+            // Add a new like
+            PitchUserLikesDislike::create(['user_id' => $userId, 'pitch_id' => $id, 'liked' => true]);
+            $pitch->likes++;
+        }
+
+        $pitch->save();
+        return redirect()->route('dashboard.index')->with('success', '1 like');
+    }
+
+    public function dislikes($id)
+    {
+        $pitch = Investor::findOrFail($id); // Assuming Investor model is used for pitches
+        $userId = Auth::id();
+
+        // Check if the user has already liked or disliked the pitch
+        $existing = PitchUserLikesDislike::where('user_id', $userId)->where('pitch_id', $id)->first();
+
+        if ($existing) {
+            if ($existing->disliked) {
+                return redirect()->route('dashboard.index')->with('error', 'You have already disliked this pitch.');
+            } elseif ($existing->liked) {
+                // If the user has liked, remove the like and add a dislike
+                $existing->liked = null;
+                $existing->disliked = true;
+                $pitch->likes--;
+                $pitch->dislikes++;
+                $existing->save();
+            }
+        } else {
+            // Add a new dislike
+            PitchUserLikesDislike::create(['user_id' => $userId, 'pitch_id' => $id, 'disliked' => true]);
+            $pitch->dislikes++;
+        }
+
+        $pitch->save();
+        return redirect()->route('dashboard.index')->with('success', '1 dislike');
+    }
+    public function interest($id)
+    {
+        $investor = Investor::findOrFail($id);
+        $investor->views = $investor->views + 1;
+        $investor->save();
+        return redirect()->route('investors.show', $id);
     }
 
 

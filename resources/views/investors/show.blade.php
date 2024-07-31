@@ -23,8 +23,9 @@
                             <h3>{{ __('Investor Details') }}</h3>
                         </div>
                         <div class="card-body">
+                            @can('manage_investors')
                             <a href="{{ route('investors.index') }}" class="btn btn-secondary mb-3">Back to Investors List</a>
-                            
+                            @endcan
                             <div class="mb-3">
                                 <h4>About Founder/s</h4>
                                 @foreach ($investor->founders as $founder)
@@ -89,13 +90,16 @@
                                     <p><strong>Equity Offered Against Capital Ask:</strong> {{ $investor->equity_offered }}%</p>
                                 @endif
                             </div>
-                            
+                            @can('pitch_edit')
                             <a href="{{ route('investors.edit', $investor->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
+                            @can('pitch_delete')
                             <form action="{{ route('investors.destroy', $investor->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
+                            @endcan
                         </div>
                     </div>
                 </div>

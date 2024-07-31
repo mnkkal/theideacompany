@@ -183,6 +183,9 @@ Route::resource('job-applications', JobApplicationController::class);
 Route::get('job-applications/apply/{id}', [JobApplicationController::class, 'apply'])->name('job-applications.apply');
 Route::resource('subscriptions', SubscriptionController::class);
 Route::resource('investors', InvestorController::class);
+Route::post('investor/pitch/like/{id}', [InvestorController::class, 'likes'])->name('investor.pitch.like');
+Route::post('investor/pitch/dislike/{id}', [InvestorController::class, 'dislikes'])->name('investor.pitch.dislike');
+Route::post('investor/pitch/interest/{id}', [InvestorController::class, 'interest'])->name('investor.pitch.interest');
 Route::resource('founders', FounderController::class);
 
 Route::resource('transactions', TransactionController::class);

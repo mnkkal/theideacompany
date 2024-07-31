@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Jobs') }}
+    {{ __('Pitchs') }}
 @endsection
 
 @section('page_css')
@@ -39,7 +39,7 @@
                                 </div>
                                 <a href="{{ route('investors.create') }}">
                                     <button type="button" class="my-2 pull-right btn btn-primary new-user-btn filter-container__btn ms-sm-0 ms-auto">
-                                        Create New Investor
+                                    New Form Of Pitch
                                     </button>
                                 </a>
                             </div>
