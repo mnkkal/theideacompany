@@ -38,7 +38,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/conversations';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -75,14 +75,14 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        if (\Auth::check() && \Auth::user()->hasPermissionTo('manage_conversations')) {
-            $this->redirectTo = '/conversations';
+        if (\Auth::check() ) {
+            $this->redirectTo = '/dashboard';
         } elseif (\Auth::check()) {
             if (\Auth::user()->getAllPermissions()->count() > 0) {
                 $url = getPermissionWiseRedirectTo(\Auth::user()->getAllPermissions()->first());
                 $this->redirectTo = $url;
             } else {
-                $this->redirectTo = '/conversations';
+                $this->redirectTo = '/dashboard';
             }
         }
 
