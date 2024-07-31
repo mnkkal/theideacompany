@@ -17,26 +17,22 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // $user = Auth::user();
-
-        // switch ($user->role) {
-        //     case 'Admin':
-        //         return $this->superAdminDashboard();
-        //     case 'Investor':
-        //         return $this->investorDashboard();
-        //     case 'Startup':
-        //         return $this->startupDashboard();
-        //     case 'Employee':
-        //             return $this->employeeDashboard();
-        //     case 'Employer':
-        //                 return $this->employerDashboard();
-         //   default:
-           
-        //    return $this->welcomeDashboard();
-        //}
-        return $this->superAdminDashboard();
+        $user = Auth::user();
+        if($user->hasRole('Admin')){
+            return $this->superAdminDashboard($request);
+        }else if ($user->hasRole('Investor')){
+            return $this->investorDashboard($request);
+        }else if ($user->hasRole('Startup')){
+            return $this->startupDashboard($request);
+        }else if ($user->hasRole('Employee')){
+            return $this->employeeDashboard($request);
+        }else if ($user->hasRole('Employer')){
+            return $this->employerDashboard($request);
+        }else{
+            return $this->welcomeDashboard();
+        }
     }
     protected function superAdminDashboard()
     {
@@ -54,16 +50,41 @@ class DashboardController extends Controller
        
     }
 
-    protected function investorDashboard()
+    protected function investorDashboard($request)
     {
-        $pitches = Investor::All();
+        //dd($request->input('search'));
+        $query = Investor::where('sector','!=', null);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('name_of_venture', 'like', '%' . $search . '%')
+                  ->orWhere('problem_opportunity', 'like', '%' . $search . '%')
+                  ->orWhere('sector', 'like', '%' . $search . '%');
+            });
+        }
+
+        $pitches = $query->get();
+       
 
         return view('dashboards.investor', compact('pitches'));
     }
 
-    protected function startupDashboard()
+    protected function startupDashboard($request)
     {
-        $pitches = Investor::where('created_by', auth()->user()->id)->get();
+        $query = Investor::where('created_by', auth()->user()->id);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('name_of_venture', 'like', '%' . $search . '%')
+                  ->orWhere('problem_opportunity', 'like', '%' . $search . '%')
+                  ->orWhere('sector', 'like', '%' . $search . '%');
+            });
+        }
+
+        $pitches = $query->get();
+       
        
 
         return view('dashboards.startup', compact('pitches'));

@@ -33,6 +33,14 @@
                              
                             </div>
                         </div>
+                        <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search for pitches..." value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
                         <div class="card-body">
                         <table class="table  table-borderless table-responsive-sm table-responsive-lg table-responsive-md table-responsive-xl" id="jobs_table">
     <thead>

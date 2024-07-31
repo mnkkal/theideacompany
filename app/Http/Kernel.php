@@ -69,4 +69,8 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'sendMessage' => SendMessage::class,
     ];
+    protected $routeMiddleware = [
+        // Other middleware
+        'role.redirect' => \App\Http\Middleware\RoleRedirect::class,
+    ];
 }

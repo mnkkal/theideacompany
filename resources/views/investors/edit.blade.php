@@ -58,7 +58,12 @@
 
                                 <!-- Section 2 - Concept of Venture -->
                                 <div class="form-section mb-3">
-                                <h4>Name of venture </h4>
+                                <h4>Concept of venture </h4>
+                                   
+                                   <div class="form-group mb-3">
+                                       <label for="capital_required">Name of venture</label>
+                                       <input type="text" class="form-control" name="name_of_venture" id="name_of_venture" value="{{$investor->name_of_venture }}" placeholder="Name of venture">
+                                   </div>
                                 <div class="form-group mb-3">
                                     <label for="company_logo">Company Logo</label>
                                     @if($investor->company_logo)

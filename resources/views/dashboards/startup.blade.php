@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
+    <h1>Startup Dashboard</h1>
+    
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -8,109 +11,114 @@
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
-<div class="container">
-    <h1>Startup Dashboard</h1>
+    
+    <!-- Buttons -->
     <div class="d-flex justify-content-end mb-3">
-       
         <a href="{{ route('investors.create') }}" class="btn btn-success">Create a Pitch</a>
     </div>
-    <table class="table table-striped mb-5">
-       
-        <tbody>
-            @foreach($pitches as $pitch)
-            
-            <tr>
-                <th>Name of venture</th>
-                <th>Name of founder/s </th>
-                <th>Qualifications</th>
-                <th>Logo</th>
-            </tr>
-             <tr>
-                <td>{{ $pitch->name_of_venture }}</td>
-                <td> 
-                    @foreach ($pitch->founders as $index => $founder)
-                    {{ $founder->name }}
-                    @endforeach
-                </td>
-                <td>
-                @foreach ($pitch->founders as $index => $founder)
-                    {{ $founder->qualification }}
-                @endforeach
-                </td>
-                <td> <img src="{{ asset('uploads/' . $pitch->company_logo) }}" alt="Company Logo" width="100"> </td>
-            </tr>
-            <tr>
-                <th>problem/opportunity </th>
-                <th></th>
-                <th></th>
-                <th>Sector</th>
-              
-              
-            </tr>
-            <tr>
-             <td>{{ $pitch->problem_opportunity }}</td>
-             <td></td>
-             <td></td>
-             <td>{{ $pitch->sector }}</td>
-           
-            </tr>
-            <tr>
-                <th>solution/Technology </th>
-                <th></th>
-                <th></th>
-                <th></th>
-              
-            </tr>
-            <tr>
-            <td>{{ $pitch->solution_technology }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-               
-           
-            </tr>
-            <tr>
-                <th>Investment amount  </th>
-                <th></th>
-                <th></th>
-                <th></th> 
-            </tr>
-            <tr>
-                <td>
-                   <label for="">Equity: Rs.{{ $pitch->equity_amount }} + Debt: Rs.{{ $pitch->debt_amount }}</label> 
-                <p>Total Rs. : {{ $pitch->equity_amount + $pitch->debt_amount }} </p>
-                </td>
-                <td></td>
-                <td>equity split:  
-                    {{$pitch->equity_offered }}  equity
-
-                </td>
-                <td> <a href="{{ route('investors.edit', $pitch->id) }}" class="btn btn-warning">Edit</a></td>
-           
-            </tr>
-           
-            <tr>
-                <td>{{ $pitch->likes }} Likes</td>
-                <td>{{ $pitch->dislikes }} Dislikes</td>
-                <td>{{ $pitch->views }} Views</td>
-                <td> 1/7 days used</td>
-            </tr>
-   
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
+    <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search for pitches..." value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        @foreach($pitches as $pitch)
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ $pitch->name_of_venture }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>Name of Founder/s:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            @foreach ($pitch->founders as $founder)
+                                <p>{{ $founder->name }}</p>
+                            @endforeach
+                        </div>
+                   
+                        <div class="col-md-3">
+                            <strong>Qualifications:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            @foreach ($pitch->founders as $founder)
+                                <p>{{ $founder->qualification }}</p>
+                            @endforeach
+                        </div>
+                  
+                        <div class="col-md-3">
+                            <strong>Logo:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ asset('uploads/' . $pitch->company_logo) }}" alt="Company Logo" width="100">
+                        </div>
+                   
+                        <div class="col-md-3">
+                            <strong>Problem/Opportunity:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{ $pitch->problem_opportunity }}</p>
+                        </div>
+                 
+                        <div class="col-md-3">
+                            <strong>Sector:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{ $pitch->sector }}</p>
+                        </div>
+                    
+                  
+                        <div class="col-md-3">
+                            <strong>Solution/Technology:</strong>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{ $pitch->solution_technology }}</p>
+                        </div>
+                   
+                   
+                        <div class="col-md-3">
+                            <strong>Investment Amount:</strong>
+                        </div>
+                        <div class="col-md-9">
+                            <p>Equity: Rs.{{ $pitch->equity_amount }} + Debt: Rs.{{ $pitch->debt_amount }}</p>
+                            <p>Total Rs.: {{ $pitch->equity_amount + $pitch->debt_amount }}</p>
+                            <p>Equity Split: {{$pitch->equity_offered}} equity</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                   
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <p>{{ $pitch->likes }} Likes</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{ $pitch->dislikes }} Dislikes</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{ $pitch->views }} Views</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>1/7 days used</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-right">
+                            <a href="{{ route('investors.edit', $pitch->id) }}" class="btn btn-warning">Edit</a>
+                        </div>
+                        <div class="col-md-9">
+                            <!-- Additional empty columns to maintain alignment -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </div>
 @endsection
