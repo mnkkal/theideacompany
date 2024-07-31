@@ -1,7 +1,7 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
         <div class="d-flex align-items-center justify-content-between mb-3 overflow-hidden sidebar-inner-header">
-            <a class="navbar-brand d-flex align-items-center" href="{{url('/')}}" target="_blank">
+            <a class="navbar-brand d-flex align-items-center" href="{{url('/dashboard')}}" >
                 <img class="navbar-brand-minimized me-4" src="{{ getThumbLogoUrl() }}" width="30" alt="Infyom Logo"
                      height="30" alt="{{config('app.name')}}">
                 <span class="d-flex">
