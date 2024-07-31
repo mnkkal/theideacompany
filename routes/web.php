@@ -21,6 +21,7 @@ use App\Http\Controllers\FounderController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ParentGroupController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -188,7 +189,9 @@ Route::resource('transactions', TransactionController::class);
 Route::resource('parent-groups', ParentGroupController::class);
 
 
-Route::get('payment', [PaymentController::class, 'index']);
+Route::get('payment/{id}', [PaymentController::class, 'index'])->name('payment');
 Route::post('payment', [PaymentController::class, 'store']);
 Route::any('payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::any('payment/failure', [PaymentController::class, 'failure'])->name('payment.failure');
+
+Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

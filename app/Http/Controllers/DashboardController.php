@@ -6,29 +6,30 @@ use Illuminate\Http\Request;
 use App\Models\Investor;
 use App\Models\Startup;
 use App\Models\Pitch;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        switch ($user->role) {
-            case 'Admin':
-                return $this->superAdminDashboard();
-            case 'Investor':
-                return $this->investorDashboard();
-            case 'Startup':
-                return $this->startupDashboard();
-            case 'Employee':
-                    return $this->employeeDashboard();
-            case 'Employer':
-                        return $this->employerDashboard();
-            default:
+        // switch ($user->role) {
+        //     case 'Admin':
+        //         return $this->superAdminDashboard();
+        //     case 'Investor':
+        //         return $this->investorDashboard();
+        //     case 'Startup':
+        //         return $this->startupDashboard();
+        //     case 'Employee':
+        //             return $this->employeeDashboard();
+        //     case 'Employer':
+        //                 return $this->employerDashboard();
+         //   default:
            
                 return $this->welcomeDashboard();
-        }
+        //}
     }
     protected function superAdminDashboard()
     {
@@ -68,9 +69,8 @@ class DashboardController extends Controller
     }
     protected function welcomeDashboard()
     {
-        // Add logic to fetch data relevant to employees
-        $tasks = Task::where('assigned_to', Auth::id())->get(); // Example: fetching tasks assigned to the employee
+        $products = Subscription::all();
 
-        return view('dashboards.employee', compact('tasks'));
+        return view('dashboards.welcome', compact('products'));
     }
 }

@@ -35,26 +35,38 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validate image
         ]);
-      $subplan =   new Subscription();
-      $subplan->name = $request->name;
-      $subplan->description = $request->description;
-      $subplan->price = $request->price;
-    if(count($request->chat_group) > 0){
-        $subplan->chat_group = json_encode($request->chat_group);
-    }
-    if(count($request->permissions) > 0){
-        $subplan->permissions = json_encode($request->permissions);
-    }
-      $subplan->save();
-
+    
+        $subplan = new Subscription();
+        $subplan->name = $request->name;
+        $subplan->description = $request->description;
+        $subplan->price = $request->price;
+    
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $subplan->image = $imageName; 
+        }
+    
+        if ($request->has('chat_group') && count($request->chat_group) > 0) {
+            $subplan->chat_group = json_encode($request->chat_group);
+        }
+    
+        if ($request->has('permissions') && count($request->permissions) > 0) {
+            $subplan->permissions = json_encode($request->permissions);
+        }
+    
+        $subplan->save();
+    
         return redirect()->route('subscriptions.index')->with('success', 'Subscription created successfully.');
     }
+    
 
     /**
      * Display the specified resource.
@@ -77,26 +89,49 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subscription $subscription)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validate image
         ]);
-        $subscription->name = $request->name;
-        $subscription->description = $request->description;
-        $subscription->price = $request->price;
-        if(count($request->chat_group) > 0){
-            $subscription->chat_group = json_encode($request->chat_group);
+    
+        $subplan = Subscription::findOrFail($id);
+        $subplan->name = $request->name;
+        $subplan->description = $request->description;
+        $subplan->price = $request->price;
+    
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete the old image if exists
+            if ($subplan->image && file_exists(public_path('images/' . $subplan->image))) {
+                unlink(public_path('images/' . $subplan->image));
+            }
+    
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $subplan->image = $imageName; // store the image name in the database
         }
-        if(count($request->permissions) > 0){
-           $subscription->permissions = json_encode($request->permissions);
+    
+        if ($request->has('chat_group') && count($request->chat_group) > 0) {
+            $subplan->chat_group = json_encode($request->chat_group);
+        } else {
+            $subplan->chat_group = null;
         }
-        $subscription->save();
-
+    
+        if ($request->has('permissions') && count($request->permissions) > 0) {
+            $subplan->permissions = json_encode($request->permissions);
+        } else {
+            $subplan->permissions = null;
+        }
+    
+        $subplan->save();
+    
         return redirect()->route('subscriptions.index')->with('success', 'Subscription updated successfully.');
     }
+    
 
     public function destroy(Subscription $subscription)
     {

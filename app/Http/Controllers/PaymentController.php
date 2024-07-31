@@ -19,9 +19,10 @@ class PaymentController extends Controller
         $this->razorpay = $razorpay;
     }
 
-    public function index()
+    public function index($id)
     {
-        return view('payment');
+        $subplan = Subscription::where('id', $id)->first();
+        return view('payment', compact('subplan'));
     }
 
     public function store(Request $request)
