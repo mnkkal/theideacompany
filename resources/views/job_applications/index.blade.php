@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ __('Jobs') }}
+    {{ __('Jobs Application') }}
 @endsection
 @section('page_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTable.min.css') }}"/>
@@ -19,7 +19,7 @@
                             class="card-header page-header flex-wrap align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="user-header d-flex align-items-center justify-content-between">
                                 <div class="pull-left page__heading me-3 my-2">
-                                    {{ __('Jobs') }}
+                                    {{ __('Jobs Application') }}
                                 </div>
                                 <button type="button"
                                         class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block"

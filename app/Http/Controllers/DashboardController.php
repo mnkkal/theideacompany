@@ -8,6 +8,12 @@ use App\Models\Startup;
 use App\Models\Pitch;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Job;
+use App\Models\JobApplication;
+use App\Models\User;
+use App\Models\Transaction;
+use App\Models\Role;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -30,15 +36,22 @@ class DashboardController extends Controller
            
         //    return $this->welcomeDashboard();
         //}
-        return $this->startupDashboard();
+        return $this->superAdminDashboard();
     }
     protected function superAdminDashboard()
     {
-        $investorCount = Investor::count();
-        $startupCount = Startup::count();
-        // Add more counts if needed
+        $userCount = User::count();
 
-        return view('dashboards.super_admin', compact('investorCount', 'startupCount'));
+        // Get user count by roles
+        $roles = Role::withCount('users')->get();
+
+        // Get transaction count and income for the current month
+        $currentMonth = Carbon::now()->month;
+        $transactionCount = Transaction::whereMonth('created_at', $currentMonth)->count();
+        $income = Transaction::whereMonth('created_at', $currentMonth)->sum('amount');
+
+        return view('dashboards.super_admin', compact('userCount', 'roles', 'transactionCount', 'income'));
+       
     }
 
     protected function investorDashboard()
@@ -57,17 +70,17 @@ class DashboardController extends Controller
     }
     protected function employeeDashboard()
     {
-        // Add logic to fetch data relevant to employees
-        $tasks = Task::where('assigned_to', Auth::id())->get(); 
+       
+        $jobs = Job::all();
 
-        return view('dashboards.employee', compact('tasks'));
+        return view('dashboards.employee', compact('jobs'));
     }
     protected function employerDashboard()
     {
-        // Add logic to fetch data relevant to employees
-        $tasks = Task::where('assigned_to', Auth::id())->get(); 
-
-        return view('dashboards.employee', compact('tasks'));
+      
+        $applications = JobApplication::with('job')->get();
+       
+        return view('dashboards.employer', compact('applications'));
     }
     protected function welcomeDashboard()
     {

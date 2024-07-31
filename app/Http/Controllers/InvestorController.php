@@ -107,10 +107,10 @@ class InvestorController extends Controller
     }
     public function likes($id)
     {
-        $pitch = Investor::findOrFail($id); // Assuming Investor model is used for pitches
+        $pitch = Investor::findOrFail($id); 
         $userId = Auth::id();
 
-        // Check if the user has already liked or disliked the pitch
+     
         $existing = PitchUserLikesDislike::where('user_id', $userId)->where('pitch_id', $id)->first();
 
         if ($existing) {
