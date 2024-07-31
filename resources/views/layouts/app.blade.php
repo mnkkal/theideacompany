@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/icheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datetime-picker.css') }}"/>
     <link rel="stylesheet" href="{{ mix('assets/css/jquery.toast.min.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="{{ mix('assets/js/jquery.min.js') }}"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     @if(getLoggedInUser()->is_subscribed)
@@ -35,6 +36,16 @@
     <link rel="stylesheet" href="{{ mix('assets/css/custom-style.css') }}">
 
 </head>
+<style>
+    body {
+    font-family: 'Poppins', sans-serif !important; 
+}
+
+/* Apply Poppins font to other elements if needed */
+h1, h2, h3, h4, h5, h6, p, a, span, div {
+    font-family: 'Poppins', sans-serif !important; 
+}
+</style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
     <button class="navbar-toggler sidebar-toggler d-lg-none me-auto" type="button" data-toggle="sidebar-show">
