@@ -55,6 +55,7 @@ Route::get('/users/impersonate-logout',
 
 Route::middleware(['user.activated', 'auth'])->group(function () {
     //view routes
+    Route::any('/joblist', [DashboardController::class, 'job'])->name('joblist.index');
     Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/conversations', [ChatController::class, 'index'])->name('conversations');
     Route::get('profile', [UserController::class, 'getProfile']);

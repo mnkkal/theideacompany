@@ -110,7 +110,7 @@ class DashboardController extends Controller
 
         return view('dashboards.startup', compact('pitches'));
     }
-    protected function employeeDashboard($request)
+    public function employeeDashboard($request)
    {
     $searchTerm = $request->input('search');
 
@@ -141,4 +141,21 @@ class DashboardController extends Controller
 
         return view('dashboards.welcome', compact('products'));
     }
+    public function job(Request $request)
+    {
+     $searchTerm = $request->input('search');
+ 
+    
+     $jobs = Job::query()
+         ->where('apply_by', '>=', now()) 
+         ->when($searchTerm, function ($query, $searchTerm) {
+             return $query->where('job_post', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('company_name', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('about_job', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('job_type', 'LIKE', "%{$searchTerm}%");
+         })
+         ->paginate(10);
+ 
+     return view('dashboards.employee', compact('jobs'));
+     }
 }
