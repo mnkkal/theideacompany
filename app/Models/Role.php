@@ -71,7 +71,8 @@ class Role extends Model implements RoleContract
     const ADMIN_ROLE = 1;
 
     const MEMBER_ROLE = 2;
-
+    const STARTUP_ROLE = 8;
+    const STARTUP_ROLE_NAME = 'Startup';
     const MEMBER_ROLE_NAME = 'Member';
 
     const ADMIN_ROLE_NAME = 'Admin';

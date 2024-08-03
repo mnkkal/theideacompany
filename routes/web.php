@@ -42,7 +42,7 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', function () {
     return view('home.index');
 })->name('home');
-
+Route::get('products', [DashboardController::class, 'welcomeDashboard'])->name('products.index');
 Auth::routes();
 Route::get('activate', [AuthController::class, 'verifyAccount']);
 
@@ -55,8 +55,8 @@ Route::get('/users/impersonate-logout',
 
 Route::middleware(['user.activated', 'auth'])->group(function () {
     //view routes
-    Route::get('/conversations',
-        [ChatController::class, 'index'])->name('conversations');
+    Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/conversations', [ChatController::class, 'index'])->name('conversations');
     Route::get('profile', [UserController::class, 'getProfile']);
     Route::get('logout', [LoginController::class, 'logout']);
 
@@ -197,4 +197,4 @@ Route::post('payment', [PaymentController::class, 'store']);
 Route::any('payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::any('payment/failure', [PaymentController::class, 'failure'])->name('payment.failure');
 
-Route::any('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+

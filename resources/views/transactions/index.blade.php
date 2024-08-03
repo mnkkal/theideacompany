@@ -38,10 +38,16 @@
                                 </a>
                             </div>
                         </div>
+                        <form action="{{ route('transactions.index') }}" method="GET" class="d-flex align-items-center">
+                            <input type="text" name="search" class="form-control me-2" placeholder="Search by transaction ID, amount, etc." value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </form>
                         <div class="card-body">
                             @include('transactions.table')
                             <div class="pull-right me-3">
-                               
+                         
+    {{ $transactions->links() }}
+
                             </div>
                         </div>
                     </div>

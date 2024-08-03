@@ -20,6 +20,8 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        //dd($user);
+       
         if($user->hasRole('Admin')){
             return $this->superAdminDashboard($request);
         }else if ($user->hasRole('Investor')){
@@ -133,7 +135,7 @@ class DashboardController extends Controller
        
         return view('dashboards.employer', compact('applications'));
     }
-    protected function welcomeDashboard()
+    public function welcomeDashboard()
     {
         $products = Subscription::all();
 

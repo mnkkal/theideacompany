@@ -21,6 +21,6 @@ class HomeController extends Controller
      */
     public function index(): RedirectResponse
     {
-        return redirect('/conversations');
+        return redirect('/dashboard');
     }
 }

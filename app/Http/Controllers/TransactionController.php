@@ -14,12 +14,21 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      
-        $transactions = Transaction::all();
-        return view('transactions.index', compact('transactions'));
-        
+        $searchTerm = $request->input('search');
+    
+        // Query to search transactions based on the search term
+        $transactions = Transaction::query()
+            ->when($searchTerm, function ($query, $searchTerm) {
+                return $query->where('transaction_id', 'LIKE', "%{$searchTerm}%")
+                             ->orWhere('amount', 'LIKE', "%{$searchTerm}%")
+                             ->orWhere('transaction_date', 'LIKE', "%{$searchTerm}%")
+                             ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            })
+            ->paginate(10);
+    
+        return view('transactions.index', compact('transactions', 'searchTerm'));
     }
 
     // /**

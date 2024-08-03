@@ -52,25 +52,31 @@
                         </div>
                    
                         <div class="col-md-3">
-                            <strong>Problem/Opportunity:</strong>
-                        </div>
-                        <div class="col-md-3">
-                            <p>{{ $pitch->problem_opportunity }}</p>
-                        </div>
-                 
-                        <div class="col-md-3">
                             <strong>Sector:</strong>
                         </div>
                         <div class="col-md-3">
                             <p>{{ $pitch->sector }}</p>
+                        </div> 
+                        <div class="col-md-3">
+                            <strong>Problem/Opportunity:</strong>
                         </div>
+                        <div class="col-md-9">
+                            <p>
+                            {{ Str::limit($pitch->problem_opportunity, 100, '...') }}
+                           </p>
+                        </div>
+                 
+                        
                     
                   
                         <div class="col-md-3">
                             <strong>Solution/Technology:</strong>
                         </div>
-                        <div class="col-md-3">
-                            <p>{{ $pitch->solution_technology }}</p>
+                        <div class="col-md-9">
+
+                            <p>
+                            {{ Str::limit($pitch->solution_technology, 100, '...') }}
+                           </p>
                         </div>
                    
                    

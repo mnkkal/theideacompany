@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $this->userRepository->assignRoles($user, ['role_id' => Role::MEMBER_ROLE]);
+        $this->userRepository->assignRoles($user, ['role_id' => Role::STARTUP_ROLE]);
         $activateCode = $this->accountRepo->generateUserActivationToken($user->id);
         $this->accountRepo->sendConfirmEmail($user->name, $user->email, $activateCode);
 

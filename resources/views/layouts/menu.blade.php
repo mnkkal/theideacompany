@@ -37,6 +37,14 @@
         </a>
     </li>
 @endcan
+
+
+<li class="nav-item {{ Request::is('products*') ? 'active' : '' }}">
+        <a class="nav-link {{ Request::is('products*') ? 'active' : '' }}" href="{{ route('products.index') }}">
+        <i class="fa fa-tasks me-4" aria-hidden="true"></i>
+            <span>{{ __('products') }}</span>
+        </a>
+    </li>
 @can('manage-job')
     <li class="nav-item {{ Request::is('jobs*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
