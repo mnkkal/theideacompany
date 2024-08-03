@@ -23,7 +23,7 @@
                         <div class="card-header page-header flex-wrap align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="user-header d-flex align-items-center justify-content-between">
                                 <div class="pull-left page__heading me-3 my-2">
-                                @can('manage-job')     
+                                @if (Request::is('dashboard'))
                                     <h1>Employee Dashboard</h1>
                                 @else
                                 <h1>Jobs</h1>
@@ -42,7 +42,7 @@
                         </div>
 
                         <!-- Search form -->
-                        @can('manage-job')     
+                        @if (Request::is('dashboard'))
                         <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search for Jobs..." value="{{ request('search') }}">
