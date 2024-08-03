@@ -67,14 +67,14 @@ class SearchUsers extends Component
      */
     public function searchUsers()
     {
-        $loggedInUser = Auth::user(); // Get the logged-in user
-        $isAdmin = $loggedInUser->hasRole('admin'); // Check if the user has an 'admin' role
+        $loggedInUser = Auth::user(); 
+        $isAdmin = $loggedInUser->hasRole('Admin'); 
     
         // Initialize gender filters
         $male = $this->male;
         $female = $this->female;
     
-        // Handle case where both male and female are selected
+       
         if ($this->male && $this->female) {
             $male = false;
             $female = false;
@@ -97,7 +97,7 @@ class SearchUsers extends Component
                     });
                 });
             }, function ($query) {
-                // If the user is not an admin, filter to only show admins
+               
                 return $query->role('admin');
             })
             ->orderBy('name', 'asc')
