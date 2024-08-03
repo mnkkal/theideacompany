@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\RazorpayTransaction;
 use App\Models\Subscription;
+use Illuminate\Support\Facades\Hash;
 
 class PaymentController extends Controller
 {
@@ -45,6 +46,17 @@ class PaymentController extends Controller
 
         $orderId = $order['id'];
         $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'password' => Hash::make('12345678'), 
+            ]);
+    
+            
+            $user->assignRole('Startup');
+        }
         $newOrder = Order::create([
             'subscription_plan_id' => $subplan->id,
             'user_id' => $user->id,
