@@ -52,9 +52,13 @@ class DashboardController extends Controller
 
     protected function investorDashboard($request)
     {
-        //dd($request->input('search'));
-        $query = Investor::where('sector','!=', null);
-
+       
+        $searchTerm = $request->input('search');
+        $selectedSector = $request->input('sector');
+        $query = Investor::where('sector','!=', null)
+        ->when($selectedSector, function ($query, $selectedSector) {
+            return $query->where('sector', $selectedSector);
+        });
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function($q) use ($search) {
@@ -63,11 +67,26 @@ class DashboardController extends Controller
                   ->orWhere('sector', 'like', '%' . $search . '%');
             });
         }
-
+        
         $pitches = $query->get();
-       
+        $sectors = [
+            'Financial services',
+            'Retail',
+            'Consumer goods/fmcg',
+            'Healthcare',
+            'Software services',
+            'Transportation and logistics',
+            'Education',
+            'Media/entertainment',
+            'Consumer niche services',
+            'Hospitality',
+            'AI/VR',
+            'Agriculture and tech',
+            'Aeronautics and aerospace tech',
+            'Defense'
+        ];
 
-        return view('dashboards.investor', compact('pitches'));
+        return view('dashboards.investor', compact('pitches', 'sectors', 'searchTerm', 'selectedSector'));
     }
 
     protected function startupDashboard($request)

@@ -218,18 +218,8 @@ class UserController extends AppBaseController
     public function userImpersonateLogin(User $user): RedirectResponse
     {
         Auth::user()->impersonate($user);
-
-        if (\Auth::check() && \Auth::user()->hasPermissionTo('manage_conversations')) {
-            return redirect(url('/conversations'));
-        } elseif (\Auth::check()) {
-            if (\Auth::user()->getAllPermissions()->count() > 0) {
-                $url = getPermissionWiseRedirectTo(\Auth::user()->getAllPermissions()->first());
-
-                return redirect(url($url));
-            } else {
-                return redirect(url('/conversations'));
-            }
-        }
+        return redirect(url('/dashboard'));
+       
     }
 
     /**

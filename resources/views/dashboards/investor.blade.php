@@ -20,6 +20,12 @@
     <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Search for pitches..." value="{{ request('search') }}">
+            <select name="sector" class="form-select">
+                <option value="">Select Sector</option>
+                @foreach ($sectors as $sector)
+                    <option value="{{ $sector }}" {{ request('sector') == $sector ? 'selected' : '' }}>{{ ucfirst($sector) }}</option>
+                @endforeach
+            </select>
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Search</button>
             </div>
