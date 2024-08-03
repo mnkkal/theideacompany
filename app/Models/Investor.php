@@ -32,6 +32,7 @@ class Investor extends Model
         'equity_amount',
         'debt_amount',
         'equity_offered',
+        'created_by'
     ];
     public function founders()
     {

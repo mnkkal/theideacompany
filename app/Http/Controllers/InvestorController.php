@@ -47,7 +47,7 @@ class InvestorController extends Controller
             $investor->founders()->create($founder);
         }
     
-        return redirect()->route('investors.index');
+        return redirect()->route('dashboard.index');
     }
     
 
@@ -96,14 +96,14 @@ class InvestorController extends Controller
             $investor->founders()->create($founder);
         }
 
-        return redirect()->route('investors.index');
+        return redirect()->route('dashboard.index');
     }
 
     public function destroy($id)
     {
         $investor = Investor::findOrFail($id);
         $investor->delete();
-        return redirect()->route('investors.index');
+        return redirect()->route('dashboard.index');
     }
     public function likes($id)
     {

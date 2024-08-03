@@ -51,15 +51,19 @@
                                         <th>ID</th>
                                         <th>Problem/Opportunity</th>
                                         <th>Solution/Technology</th>
-                                        <th>Actions</th>
+                                        <th width="280px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($investors as $investor)
+                                    @foreach ($investors as $key => $investor)
                                     <tr>
-                                        <td>{{ $investor->id }}</td>
-                                        <td>{{ $investor->problem_opportunity }}</td>
-                                        <td>{{ $investor->solution_technology }}</td>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>
+                                        {{ Str::limit($investor->problem_opportunity, 100, '...') }}
+                                       </td>
+                                        <td>
+                                        {{ Str::limit($investor->solution_technology, 100, '...') }}
+                                       </td>
                                         <td>
                                             <a href="{{ route('investors.show', $investor->id) }}" class="btn btn-info btn-sm">View</a>
                                             <a href="{{ route('investors.edit', $investor->id) }}" class="btn btn-warning btn-sm">Edit</a>

@@ -46,7 +46,10 @@
                                         <div class="product">
                                         <img src="{{ $product->image ? asset('images/' . $product->image) : 'https://via.placeholder.com/400x400' }}" alt="{{ $product->name }}" class="img-fluid" style="width: 400px; height: 400px;">
                                         <h2>{{ $product->name }}</h2>
-                                            <p>{{ $product->description }}</p>
+
+                                            <p>
+                                            {{ Str::limit($product->description, 100, '...') }}
+                                            </p>
                                             <p><strong>Rs. {{ $product->price }}</strong></p>
                                             <a href="{{ route('payment', $product->id) }}" class="btn btn-primary">Buy Now</a>
                                         </div>

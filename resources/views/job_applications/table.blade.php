@@ -1,7 +1,8 @@
 <table class="table  table-borderless table-responsive-sm table-responsive-lg table-responsive-md table-responsive-xl" id="jobs_table">
     <thead>
     <tr>
-    <th>No</th>
+   
+    <th>S.N.</th>
             <th>Job Post</th>
             <th>Name</th>
             <th>Email</th>
@@ -10,9 +11,10 @@
     </tr>
     </thead>
     <tbody>
-    @foreach ($jobApplications as $application)
+    @foreach ($jobApplications as $key => $application)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+            <td>{{ $key + 1 }}</td>
+                
                 <td>{{ $application->job->job_post }}</td>
                 <td>{{ $application->name }}</td>
                 <td>{{ $application->email }}</td>

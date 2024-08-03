@@ -15,9 +15,9 @@
     </tr>
     </thead>
     <tbody>
-    @foreach ($jobs as $job)
+    @foreach ($jobs as $key => $job)
                 <tr>
-                <td>{{ $job->id }}</td>
+                <td>{{ $key + 1 }}</td>
                         <td>{{ $job->job_post }}</td>
                         <td>{{ $job->email }}</td>
                         <td>{{ $job->company_name }}</td>
