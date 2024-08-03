@@ -146,12 +146,16 @@
                                 <i class="ti-user"></i>{{ __('messages.new_conversation') }}
                             </a>
                             @if($enableGroupSetting == 1)
+                            @can('create_chat_groups')
                             <a class="nav-item nav-link" id="nav-groups-tab" data-bs-toggle="tab" href="#nav-groups"
                                     role="tab" aria-controls="nav-groups">{{ __('messages.group.groups') }}</a>
+                            @endcan
                             @endif
+                            @can('manage_reported_users')
                                 <a class="nav-item nav-link" id="nav-blocked-users-tab" data-bs-toggle="tab"
                                     href="#nav-blocked-users" role="tab"
                                     aria-controls="nav-blocked-users">{{ __('messages.blocked_users') }}</a>
+                            @endcan
                         </nav>
 
                         <div class="tab-content search-any-member mt-3" id="nav-tabContent">
