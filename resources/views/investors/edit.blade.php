@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Edit Investor') }}
+    {{ __('Edit Pitch') }}
 @endsection
 
 @section('page_css')
@@ -20,7 +20,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>{{ __('Edit Investor') }}</h3>
+                            <h3>{{ __('Edit Pitch') }}</h3>
                         </div>
                         <div class="card-body">
                             <a href="{{ route('investors.index') }}" class="btn btn-secondary mb-3">Back to Investors List</a>
