@@ -1,13 +1,17 @@
 @extends('layouts.app')
+
 @section('title')
     {{ __('Jobs Application') }}
 @endsection
+
 @section('page_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTable.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTable.min.css') }}" />
 @endsection
+
 @section('css')
     <link rel="stylesheet" href="{{ mix('assets/css/admin_panel.css') }}">
 @endsection
+
 @section('content')
     <div class="container-fluid page__container">
         <div class="animated fadeIn main-table">
@@ -22,27 +26,37 @@
                                     {{ __('Jobs Application') }}
                                 </div>
                                 <button type="button"
-                                        class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#create_user_modal">{{ __('New Jobs') }}</button>
+                                    class="my-2 pull-right btn btn-primary filter-container__btn ms-sm-0 ms-auto d-sm-none d-block"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#create_user_modal">{{ __('New Jobs') }}</button>
                             </div>
                             <div class="filter-container user-filter align-self-sm-center align-self-end ms-auto">
+                                <!-- Search Form -->
+                               
                                 <div class="me-2 my-2 user-select2 ms-sm-0 ms-auto">
-                                  
                                 </div>
                                 <div class="me-sm-2 my-2 user-select2 ms-sm-0 ms-auto">
-                                  
                                 </div>
-                               <a href="{{route('job-applications.create')}}"> <button type="button"
-                                        class="my-2 pull-right btn btn-primary new-user-btn filter-container__btn ms-sm-0 ms-auto"
-                                      
-                                       >{{ __('New Jobs Application') }}</button></a>
+                                <a href="{{ route('job-applications.create') }}">
+                                    <button type="button"
+                                        class="my-2 pull-right btn btn-primary new-user-btn filter-container__btn ms-sm-0 ms-auto">
+                                        {{ __('New Jobs Application') }}
+                                    </button>
+                                </a>
                             </div>
                         </div>
+                        <form action="{{ route('job-applications.index') }}" method="GET" class="mb-3">
+                        <div class="input-group ">
+                            <input type="text" name="search" class="form-control"  placeholder="Search by name, email, or Exp..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
                         <div class="card-body">
                             @include('job_applications.table')
                             <div class="pull-right me-3">
-
+                                {{ $jobApplications->links() }}
                             </div>
                         </div>
                     </div>
@@ -50,15 +64,13 @@
             </div>
         </div>
     </div>
-   
 @endsection
+
 @section('page_js')
-  
 @endsection
+
 @section('scripts')
     <script>
         let defaultImageAvatar = "{{ getDefaultAvatar() }}"
     </script>
-  
 @endsection
-

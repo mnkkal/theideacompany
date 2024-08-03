@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\JobApplication;
 
 class JobController extends Controller
 {
@@ -60,9 +61,11 @@ class JobController extends Controller
     
 
     public function show(Job $job)
-    {
-        return view('jobs.show', compact('job'));
-    }
+{
+    $jobApplications = JobApplication::where('job_id', $job->id)->paginate(10);
+
+    return view('jobs.show', compact('job', 'jobApplications'));
+}
 
     public function edit(Job $job)
     {

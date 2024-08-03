@@ -1,3 +1,9 @@
+<li class="nav-item {{ Request::is('dashboard*') ? 'active' : '' }}">
+    <a class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}" href="{{ url('dashboard')  }}">
+        <i class="fa fa-home nav-icon me-4"></i>
+        <span>{{ __('Dashboard') }}</span>
+    </a>
+</li>
 @can('manage_conversations')
 <li class="nav-item {{ Request::is('conversations*') ? 'active' : '' }}">
     <a class="nav-link {{ Request::is('conversations*') ? 'active' : '' }}" href="{{ url('conversations')  }}">
@@ -30,18 +36,24 @@
             <span>{{ __('messages.roles') }}</span>
         </a>
     </li>
+@endcan
+@can('manage-job')
     <li class="nav-item {{ Request::is('jobs*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
         <i class="fa fa-tasks me-4" aria-hidden="true"></i>
             <span>{{ __('Jobs') }}</span>
         </a>
     </li>
+@endcan
+@can('manage-job-applications')
     <li class="nav-item {{ Request::is('job-applications*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('job-applications*') ? 'active' : '' }}" href="{{ route('job-applications.index') }}">
             <i class="fa fa-envelope-open nav-icon me-4"></i>
             <span>{{ __('Jobs Applications') }}</span>
         </a>
     </li>
+@endcan
+@can('manage-subcription')
     <li class="nav-item {{ Request::is('subscriptions*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('subscriptions*') ? 'active' : '' }}" href="{{ route('subscriptions.index') }}">
         <i class="fa fa-stack-exchange nav-icon me-4"></i>
@@ -68,7 +80,7 @@
         </a>
     </li>
 @endcan
-@if(!Auth::user()->hasRole('Member') && (Auth::user()->hasRole('Admin') || Auth::user()->hasPermissionTo('manage_meetings')))
+@if( (Auth::user()->hasRole('Admin') || Auth::user()->hasPermissionTo('manage_meetings')))
     <li class="nav-item {{ Request::is('meetings*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('meetings*') ? 'active' : '' }}" href="{{ route('meetings.index') }}">
             <i class="fa fa-stack-exchange nav-icon me-4"></i>

@@ -89,13 +89,24 @@ class DashboardController extends Controller
 
         return view('dashboards.startup', compact('pitches'));
     }
-    protected function employeeDashboard()
-    {
-       
-        $jobs = Job::all();
+    protected function employeeDashboard($request)
+   {
+    $searchTerm = $request->input('search');
 
-        return view('dashboards.employee', compact('jobs'));
+   
+    $jobs = Job::query()
+        ->where('apply_by', '>=', now()) 
+        ->when($searchTerm, function ($query, $searchTerm) {
+            return $query->where('job_post', 'LIKE', "%{$searchTerm}%")
+                         ->orWhere('company_name', 'LIKE', "%{$searchTerm}%")
+                         ->orWhere('about_job', 'LIKE', "%{$searchTerm}%")
+                         ->orWhere('job_type', 'LIKE', "%{$searchTerm}%");
+        })
+        ->paginate(10);
+
+    return view('dashboards.employee', compact('jobs'));
     }
+
     protected function employerDashboard()
     {
       

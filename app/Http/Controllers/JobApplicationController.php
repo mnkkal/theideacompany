@@ -9,10 +9,22 @@ use Illuminate\Support\Facades\Storage;
 
 class JobApplicationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $applications = JobApplication::with('job')->get();
-        return view('job_applications.index', compact('applications'));
+        $searchTerm = $request->input('search');
+
+       
+        $jobApplications = JobApplication::query()
+            ->when($searchTerm, function ($query, $searchTerm) {
+                return $query->whereHas('job', function ($query) use ($searchTerm) {
+                        $query->where('experience', 'LIKE', "%{$searchTerm}%");
+                    })
+                    ->orWhere('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('email', 'LIKE', "%{$searchTerm}%");
+            })
+            ->paginate(10);
+    
+        return view('job_applications.index', compact('jobApplications', 'searchTerm'));
     }
 
     public function create()
@@ -28,6 +40,7 @@ class JobApplicationController extends Controller
 
     public function store(Request $request)
     { 
+       
         $request->validate([
             'job_id' => 'required|exists:job_post,id',
             'name' => 'required',
@@ -38,11 +51,22 @@ class JobApplicationController extends Controller
             'current_job' => 'required',
             'resume' => 'required|mimes:pdf,doc,docx|max:2048'
         ]);
-
+    
+       
+        $existingApplication = JobApplication::where('job_id', $request->job_id)
+                                              ->where('email', $request->email)
+                                              ->first();
+    
+        if ($existingApplication) {
+            return redirect()->back()->with('error', 'You have already applied for this job.');
+        }
+    
+      
         if ($request->hasFile('resume')) {
             $resumePath = $request->file('resume')->store('resumes');
         }
-
+    
+       
         JobApplication::create([
             'job_id' => $request->job_id,
             'name' => $request->name,
@@ -53,10 +77,10 @@ class JobApplicationController extends Controller
             'current_job' => $request->current_job,
             'resume' => $resumePath ?? null,
         ]);
-
-        return redirect()->route('job-applications.index')
-                         ->with('success', 'Job application submitted successfully.');
+    
+        return redirect()->route('job-applications.index')->with('success', 'Application submitted successfully.');
     }
+    
 
     public function show(JobApplication $jobApplication)
     {

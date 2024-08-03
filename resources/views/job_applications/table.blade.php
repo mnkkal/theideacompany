@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach ($applications as $application)
+    @foreach ($jobApplications as $application)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $application->job->job_post }}</td>
