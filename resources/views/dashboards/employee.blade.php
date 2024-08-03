@@ -23,7 +23,11 @@
                         <div class="card-header page-header flex-wrap align-items-sm-center align-items-start flex-sm-row flex-column">
                             <div class="user-header d-flex align-items-center justify-content-between">
                                 <div class="pull-left page__heading me-3 my-2">
+                                @can('manage-job')     
                                     <h1>Employee Dashboard</h1>
+                                @else
+                                <h1>Jobs</h1>
+                                @endcan
                                 </div>
                             </div>
                             <!-- Filter container -->
@@ -38,15 +42,25 @@
                         </div>
 
                         <!-- Search form -->
+                        @can('manage-job')     
                         <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
                             <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search for jobs..."
-                                    value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control" placeholder="Search for Jobs..." value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">Search</button>
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <form action="{{ route('joblist.index') }}" method="GET" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search for Jobs..." value="{{ request('search') }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        @endcan
 
                         <!-- Job Listings in Card Layout -->
                         <div class="card-body">
