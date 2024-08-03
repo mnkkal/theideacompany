@@ -1,6 +1,6 @@
 <script id="tmplConversationsList" type="text/x-jsrender">
     <div class="contact-area">
-        
+   
         <div class="chat__person-box" data-id="{{:contactId}}" data-is_group="{{:contact.is_group}}" id="user-{{:contactId}}" data-is_my_contact="{{:~checkForMyContact(contactId)}}">
             <div class="position-relative chat__person-box-status-wrapper">
                 {{if !contact.is_group && showStatus}}<div class="chat__person-box-status {{if is_online}} chat__person-box-status--online {{else}} chat__person-box-status--offline{{/if}}"></div>{{/if}}

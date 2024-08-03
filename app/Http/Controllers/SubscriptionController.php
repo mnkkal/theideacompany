@@ -6,6 +6,8 @@ use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class SubscriptionController extends Controller
 {
@@ -14,10 +16,13 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-      
-        $subscriptions = Subscription::all();
-    
-        return view('subscriptions.index', compact('subscriptions'));
+        if(Auth::user()->hasPermissionTo('manage-subcription')){
+            $subscriptions = Subscription::all();
+        
+            return view('subscriptions.index', compact('subscriptions'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     /**
@@ -25,9 +30,13 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
-        $chat_group = Group::all();
-        $permissions = Permission::all();
-        return view('subscriptions.create', compact('permissions', 'chat_group'));
+        if(Auth::user()->hasPermissionTo('manage_roles')){
+            $chat_group = Group::all();
+            $permissions = Permission::all();
+            return view('subscriptions.create', compact('permissions', 'chat_group'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     /**
@@ -81,9 +90,13 @@ class SubscriptionController extends Controller
      */
     public function edit(Subscription $subscription)
     {
-        $chat_group = Group::all();
-        $permissions = Permission::all();
-        return view('subscriptions.edit', compact('subscription','permissions', 'chat_group'));
+        if(Auth::user()->hasPermissionTo('manage-subcription')){
+            $chat_group = Group::all();
+            $permissions = Permission::all();
+            return view('subscriptions.edit', compact('subscription','permissions', 'chat_group'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     /**
@@ -135,8 +148,12 @@ class SubscriptionController extends Controller
 
     public function destroy(Subscription $subscription)
     {
-        $subscription->delete();
+        if(Auth::user()->hasPermissionTo('manage-subcription')){
+            $subscription->delete();
 
-        return redirect()->route('subscriptions.index')->with('success', 'Subscription deleted successfully.');
+            return redirect()->route('subscriptions.index')->with('success', 'Subscription deleted successfully.');
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 }

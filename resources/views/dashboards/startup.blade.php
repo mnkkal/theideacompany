@@ -16,14 +16,7 @@
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('investors.create') }}" class="btn btn-success">Create a Pitch</a>
     </div>
-    <form action="{{ route('dashboard.index') }}" method="GET" class="mb-3">
-        <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search for pitches..." value="{{ request('search') }}">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Search</button>
-            </div>
-        </div>
-    </form>
+    
     <div class="row">
         @foreach($pitches as $pitch)
         <div class="col-md-12 mb-4">

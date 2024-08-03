@@ -64,7 +64,7 @@ class ChatController extends AppBaseController
             if (isset($setting['notification_sound'])) {
                 $data['notification_sound'] = app(Setting::class)->getNotificationSound($setting['notification_sound']);
             }
-            
+           
             return view('chat.index')->with($data);
         }else{
             return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
