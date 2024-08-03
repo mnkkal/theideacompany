@@ -38,18 +38,7 @@
         <div class="header__collapsible ms-auto align-items-center" id="collapsedNav">
             <nav>
                 @auth
-                    @if (\Auth::check() && \Auth::user()->hasPermissionTo('manage_conversations'))
-                        <a href="{{ url('/conversations') }}" class="header__link">{{ __('messages.back_to_conversations') }}</a>
-                    @elseif (\Auth::check())
-                        @if(\Auth::user()->getAllPermissions()->count() > 0)
-                            @php
-                                $url = getPermissionWiseRedirectTo(\Auth::user()->getAllPermissions()->first())
-                            @endphp
-                            <a href="{{ url($url) }}" class="header__link">{{ __('messages.back_to_conversations') }}</a>
-                        @else
-                            <a href="{{ url('/conversations') }}" class="header__link">{{ __('messages.back_to_conversations') }}</a>
-                        @endif
-                    @endif
+                <a href="{{ url('/dashboard') }}" class="header__link">{{ __('Dashboard') }}</a>
                 @else
                     @if (Route::has('login'))
                         <a href="{{ route('login') }}" class="header__link">{{ __('messages.login') }}</a>

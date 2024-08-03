@@ -234,9 +234,12 @@ class UserController extends AppBaseController
 
     public function isEmailVerified(User $user): JsonResponse
     {
-        $emailVerified = $user->email_verified_at == null ? Carbon::now() : null;
-        $user->update(['email_verified_at' => $emailVerified]);
-
-        return $this->sendSuccess(__('messages.new_keys.email_verified'));
+       
+        
+       
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+        
+        return $this->sendSuccess(__('messages.email_verified'));
     }
 }
