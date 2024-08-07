@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\JoinClause;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use App\Events\UserJoinedChat;
 
 class UserRepository extends BaseRepository
 {
@@ -67,12 +68,12 @@ class UserRepository extends BaseRepository
             $user = User::create($input);
             $this->assignRoles($user, $input);
             $this->updateProfilePhoto($user, $input);
-
+            event(new UserJoinedChat($user));
             $activateCode = $accountRepo->generateUserActivationToken($user->id);
             if (! $user->is_active) {
                 $accountRepo->sendConfirmEmail($user->name, $user->email, $activateCode);
             }
-
+           
             return $user;
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
