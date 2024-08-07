@@ -28,7 +28,11 @@
                                   
                                 </div>
                                 <div class="me-sm-2 my-2 user-select2 ms-sm-0 ms-auto">
-                                  
+                                <a href="{{ route('jobs.create') }}">
+                                    <button type="button" class="my-2 pull-right btn btn-primary new-user-btn filter-container__btn ms-sm-0 ms-auto">
+                                        {{ __('New Jobs') }}
+                                    </button>
+                                </a>
                                 </div>
                              
                             </div>
