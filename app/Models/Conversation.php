@@ -115,7 +115,7 @@ class Conversation extends Model
      * @var string[]
      */
     public static $rules = [
-        'to_id' => 'required|string',
+        'to_id' => 'required',
         'message' => 'required|string',
     ];
 

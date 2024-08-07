@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Redirect;
 use Validator;
+use App\Events\UserJoinedChat;
 
 class RegisterController extends Controller
 {
@@ -82,7 +83,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $this->userRepository->assignRoles($user, ['role_id' => Role::STARTUP_ROLE]);
+        $this->userRepository->assignRoles($user, ['role_id' => Role::MEMBER_ROLE]);
+
+        event(new UserJoinedChat($user));
         $activateCode = $this->accountRepo->generateUserActivationToken($user->id);
         $this->accountRepo->sendConfirmEmail($user->name, $user->email, $activateCode);
 
