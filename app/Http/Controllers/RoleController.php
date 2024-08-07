@@ -19,6 +19,7 @@ use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
 
 class RoleController extends AppBaseController
 {
@@ -119,6 +120,14 @@ class RoleController extends AppBaseController
 
             // Sync the role's permissions
             $role->syncPermissions($request->input('permissions'));
+            
+
+        // Sync all users with this role
+            $users = User::role($role->name)->get();
+
+            foreach ($users as $user) {
+                $user->syncPermissions($request->input('permissions'));
+            }
             Flash::success(__('Role updated successfully'));
             // Redirect back with a success message
             return redirect()->route('roles.index')->with(

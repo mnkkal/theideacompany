@@ -6,19 +6,34 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\JobApplication;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Job::all();
-        return view('jobs.index', compact('jobs'));
+        if(Auth::user()->hasPermissionTo('manage-job')){
+            $user = Auth::user();
+            if ($user->hasRole('Admin')) {
+                $jobs = Job::all();
+            } else {
+                $jobs = Job::where('created_by', $user->id)->get();
+            }
+
+            return view('jobs.index', compact('jobs'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     public function create()
     {
-       
-        return view('jobs.create');
+        if(Auth::user()->hasPermissionTo('manage-job')){
+            return view('jobs.create');
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
     }
 
     public function store(Request $request)
@@ -54,6 +69,7 @@ class JobController extends Controller
         $job->who_can_apply = $request->who_can_apply;
         $job->skill_required = $request->skill_required;
         $job->add_perks_of_job = $request->add_perks_of_job;
+        $job->created_at = auth()->user()->id;
         $job->save();
     
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
@@ -69,7 +85,12 @@ class JobController extends Controller
 
     public function edit(Job $job)
     {
-        return view('jobs.edit', compact('job'));
+        if(Auth::user()->hasPermissionTo('manage-job')){
+            return view('jobs.edit', compact('job'));
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
+        }
+
     }
 
     public function update(Request $request, Job $job)
@@ -112,13 +133,18 @@ class JobController extends Controller
 
     public function destroy(Job $job)
     {
-        if ($job->resume) {
-            Storage::delete($job->resume);
+        if(Auth::user()->hasPermissionTo('manage-job')){
+            if ($job->resume) {
+                Storage::delete($job->resume);
+            }
+
+            $job->delete();
+
+            return redirect()->route('jobs.index')
+                            ->with('success', 'Job deleted successfully.');
+        }else{
+            return Redirect::route('home')->with('error', 'Sorry! You do not have permission to access this page!');
         }
-
-        $job->delete();
-
-        return redirect()->route('jobs.index')
-                         ->with('success', 'Job deleted successfully.');
+                
     }
 }
