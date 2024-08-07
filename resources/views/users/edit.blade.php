@@ -117,18 +117,19 @@
                             </div>
                         </div>
                     </div>
+                    @php 
+
+                     $userData = \App\Models\User::where('id', 'edit_user_id')->with('permissions')->first();
+
+                    @endphp
                     <!-- Submit Field -->
                     <div class="form-group">
-                        {!! Form::label('permissions', __('messages.permissions').':') !!}
-                        <div class="form-group row login-group__sub-title" id="permissionsContainer">
-                            @foreach($permissions as $permission)
-                                <div class="form-group col-sm-6 login-group__sub-title">
-                                    {!! Form::checkbox('permissions[]', $permission->name, isset($user) && $user->permissions->contains('name', $permission->name), ['id' => 'permission_'.$permission->id]) !!}
-                                    {!! Form::label('permission_'.$permission->id, $permission->display_name) !!}
-                                </div>
-                            @endforeach
-                        </div>
+                    {!! Form::label('permissions', __('messages.permissions').':') !!}
+                    <div class="form-group row login-group__sub-title" id="permissionsContainer">
+                    <div id="permissionsContainer"></div>
                     </div>
+                </div> 
+
 
                     
                     <div class="text-start form-group mb-0 col-sm-12">

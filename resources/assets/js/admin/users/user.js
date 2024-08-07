@@ -169,18 +169,20 @@ $(document).ready(function () {
 
     $(document).on('click', '.edit-btn', function () {
         let userId = $(this).data('id');
-        renderData(route('users.edit',userId));
+       
+        renderData(route('users.edit', userId));
     });
-
+    
     window.renderData = function (url) {
         $.ajax({
             url: url,
             type: 'GET',
-            // cache: false,
             success: function (result) {
                 if (result.success) {
                     let user = result.data.user;
                     let permissions = result.data.permissions;
+    
+                    // Populate user details in the modal
                     $('#edit_user_id').val(user.id);
                     $('#edit_name').val(htmlSpecialCharsDecode(user.name));
                     $('#edit_email').val(user.email);
@@ -190,37 +192,53 @@ $(document).ready(function () {
                     $('#edit_upload-photo-img').attr('src', user.photo_url);
                     $('#edit_about').val(htmlSpecialCharsDecode(user.about));
                     $('#edit_user_modal').modal('show');
+  
+                    // Set gender radio buttons
                     if (user.gender == 1) {
                         $('#edit_male').prop('checked', true);
                     }
                     if (user.gender == 2) {
                         $('#edit_female').prop('checked', true);
                     }
-
+    
+                    // Set privacy radio buttons
                     if (user.privacy == 1) {
                         $('#editPrivacyPublic').prop('checked', true);
                     } else {
                         $('#editPrivacyPrivate').prop('checked', true);
                     }
-                    $('#permissionsContainer').empty();
     
+                    // Clear existing permissions
+                    $('#permissionsContainer').empty();
+                  
+                    // Populate permissions with checkboxes
                     permissions.forEach(permission => {
-                        let checked = user.permissions.some(userPermission => userPermission.name === permission.name) ? 'checked' : '';
+                        let isChecked = user.permissions.some(userPermission => userPermission.name === permission.name) ? 'checked' : '';
                         let permissionHtml = `
                             <div class="form-group col-sm-6 login-group__sub-title">
-                                <input type="checkbox" name="permissions[]" value="${permission.name}" ${checked} id="permission_${permission.id}">
+                                <input type="checkbox" name="permissions[]" value="${permission.name}" ${isChecked} id="permission_${permission.id}">
                                 <label for="permission_${permission.id}">${permission.display_name}</label>
                             </div>
                         `;
                         $('#permissionsContainer').append(permissionHtml);
+                 
                     });
                 }
             },
             error: function (error) {
+                // Display an error message if the request fails
                 displayToastr(Lang.get('messages.new_keys.error'), 'error', error.responseJSON.message);
             },
         });
     };
+    
+    // Helper function to decode HTML special characters
+    function htmlSpecialCharsDecode(str) {
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = str;
+        return textArea.value;
+    }
+    
 
     const swalDelete = Swal.mixin({
         customClass: {

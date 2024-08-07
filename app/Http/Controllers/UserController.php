@@ -107,7 +107,7 @@ class UserController extends AppBaseController
     {
        
         $user = User::with(['roles', 'permissions'])->findOrFail($user->id);
-        $user = $user->apiObj();
+
         $permissions = Permission::all();
         return $this->sendResponse(['user' => $user, 'permissions'=> $permissions], 'User retrieved successfully.');
     }

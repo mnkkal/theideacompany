@@ -38,13 +38,14 @@
     </li>
 @endcan
 
-
+@can('manage_products')
 <li class="nav-item {{ Request::is('products*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('products*') ? 'active' : '' }}" href="{{ route('products.index') }}">
         <i class="fa fa-tasks me-4" aria-hidden="true"></i>
             <span>{{ __('products') }}</span>
         </a>
     </li>
+@endcan
 @can('manage-job')
     <li class="nav-item {{ Request::is('jobs*') ? 'active' : '' }}">
         <a class="nav-link {{ Request::is('jobs*') ? 'active' : '' }}" href="{{ route('jobs.index') }}">
@@ -105,14 +106,7 @@
         </a>
     </li>
 @endif
-@role('Member')
-    <li class="nav-item {{ Request::is('meetings*') ? 'active' : '' }}">
-        <a class="nav-link {{ Request::is('meetings*') ? 'active' : '' }}" href="{{ route('meetings.member_index') }}">
-            <i class="fa fa-stack-exchange nav-icon me-4"></i>
-            <span>{{ __('messages.meetings') }}</span>
-        </a>
-    </li>
-@endrole
+
 @can('manage_front_cms')
 <li class="nav-item {{ Request::is('front-cms*') ? 'active' : '' }}">
     <a class="nav-link {{ Request::is('front-cms*') ? 'active' : '' }}" href="{{ route('front.cms') }}">
