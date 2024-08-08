@@ -69,7 +69,7 @@ class JobController extends Controller
         $job->who_can_apply = $request->who_can_apply;
         $job->skill_required = $request->skill_required;
         $job->add_perks_of_job = $request->add_perks_of_job;
-        $job->created_at = auth()->user()->id;
+        $job->created_by = auth()->user()->id;
         $job->save();
     
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
