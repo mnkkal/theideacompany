@@ -73,23 +73,24 @@
                                             </div>
                                             <div class="card-body">
                                                 <p><strong>Company Name:</strong> {{ $job->company_name }}</p>
-                                                <div class="row"> 
-                                                  <div class="col-3 ">
-                                                  <p><strong>Job Type:</strong></p>
-                                                @foreach (json_decode($job->job_type) as $type)
-                                                    <span class="badge bg-secondary">{{ ucfirst(str_replace('_', ' ', $type)) }}</span>
-                                                @endforeach
+                                                <div class="row">
+    <div class="col-12 col-md-3">
+        <p><strong>Job Type:</strong></p>
+        @foreach (json_decode($job->job_type) as $type)
+            <span class="badge bg-secondary">{{ ucfirst(str_replace('_', ' ', $type)) }}</span>
+        @endforeach
+    </div>
+    <div class="col-12 col-md-3">
+        <p class="mt-2"><strong>Apply By:</strong> {{ \Carbon\Carbon::parse($job->apply_by)->diffForHumans() }}</p>
+    </div>
+    <div class="col-12 col-md-3">
+        <p><strong>Salary:</strong> {{ $job->salary }}</p>
+    </div>
+    <div class="col-12 col-md-3">
+        <!-- This column is empty, but you can add content here if needed -->
+    </div>
+</div>
 
-                                                  </div>
-                                                  <div class="col-3 ">
-                                                  <p class="mt-2"><strong>Apply By:</strong> {{ \Carbon\Carbon::parse($job->apply_by)->diffForHumans() }}</p>
-                                                  </div>
-                                                  <div class="col-3 ">
-                                                  <p><strong>Salary:</strong> {{ $job->salary }}</p>
-                                                  </div>
-                                                  <div class="col-3 ">
-                                                  </div>
-                                                  </div>
                                                 
                                                
                                                 <p><strong>About Job:</strong> 
