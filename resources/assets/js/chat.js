@@ -2197,6 +2197,21 @@ $(document).ready(function () {
     };
 
     window.displayMessage = function (data) {
+        // Helper function to detect and convert URLs and emails into clickable links
+        function detectUrlFromTextMessage(message) {
+            // Regular expression to find URLs
+            const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            // Regular expression to find email addresses
+            const emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+    
+            // Replace URLs and emails with clickable links
+            message = message.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
+            message = message.replace(emailPattern, '<a href="mailto:$1">$1</a>');
+    
+            return message;
+        }
+    
+    
         if (data.message_type === mediaTypeImage) {
             return imageRenderer(data.message);
         } else if (data.message_type === mediaTypePdf) {
@@ -2210,8 +2225,7 @@ $(document).ready(function () {
         } else if (data.message_type === mediaTypeTxt) {
             return fileRenderer(data.message, data.file_name, textURL);
         } else if (data.message_type === mediaTypeXls) {
-            return fileRenderer(data.message, data.file_name,
-                xlsURL);
+            return fileRenderer(data.message, data.file_name, xlsURL);
         } else if (data.message_type === mediaTypeVoice) {
             return voiceRenderer(data.message, data.file_name);
         } else if (data.message_type === mediaTypeZip) {
@@ -2227,11 +2241,12 @@ $(document).ready(function () {
                 };
                 return $.templates('#tmplLinkPreview').render(records);
             }
-
-            return emojione.shortnameToImage(
-                detectUrlFromTextMessage(data.message));
+    
+            // Convert detected URLs and emails in the message text to clickable links
+            return emojione.shortnameToImage(detectUrlFromTextMessage(data.message));
         }
     };
+    
 
     window.checkYoutubeUrl = function (message) {
         let youtubeLink = 'youtube.com/watch?v=';

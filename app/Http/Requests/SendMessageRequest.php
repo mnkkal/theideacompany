@@ -15,23 +15,11 @@ class SendMessageRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->sanitize();
-    }
-
     /**
      * Get the validation rules that apply to the request.
      */
     public function rules(): array
     {
         return Conversation::$rules;
-    }
-
-    public function sanitize()
-    {
-        $input = $this->all();
-
-        $this->replace($input);
     }
 }

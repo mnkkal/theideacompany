@@ -1,28 +1,27 @@
 
 <script id="tmplChatSendArea" type="text/x-jsrender">
+    <div class="chat__area-text">
+        <?php if(Auth::user()->hasPermissionTo('can_chat')){ ?>
 
-
-<div class="chat__area-text">
-<?php if(Auth::user()->hasPermissionTo('can_chat')){ ?>
-
-    <div class="w-100 flex-1 chat__area-form ">
-        <input type="text" id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>">
+        <div class="w-100 flex-1 chat__area-form mb-5">
+            <!-- Changed input to textarea to allow multiline input -->
+            <textarea id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>"></textarea>
+        </div>
+        <div class="flex-1 d-flex chat__area-btn-group">
+            <button class="chat__area-media-btn me-2 btn"
+                    data-bs-target="#fileUpload"
+                    id="chat-media-paperclip"
+                    data-bs-toggle="modal">
+                <i class="fa fa-paperclip" aria-hidden="true"></i>
+            </button>
+            <button type="button" id="btnSend" class="btn chat__area-send-btn chat__area-send-btn--disable">
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+            </button>
+        </div>
+        <?php } ?>
     </div>
-    <div class="flex-1 d-flex chat__area-btn-group">
-        <button class="chat__area-media-btn me-2 btn"
-                data-bs-target="#fileUpload"
-                id="chat-media-paperclip"
-                data-bs-toggle="modal">
-            <i class="fa fa-paperclip" aria-hidden="true"></i>
-        </button>
-        <button type="button" id="btnSend" class="btn chat__area-send-btn chat__area-send-btn--disable">
-            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-        </button>
-    </div>
-<?php } ?>
-</div>
-
 </script>
+
 
 
 <script id="tmplUserNewStatus" type="text/x-jsrender">
