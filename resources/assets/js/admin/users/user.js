@@ -188,7 +188,7 @@ $(document).ready(function () {
                     $('#edit_email').val(user.email);
                     $('#edit_phone').val(user.phone);
                     $('#edit_is_active').val(user.is_active);
-                    $('#edit_role_id').val(user.role_id);
+                    $('#edit_role_id').val(user.roles[0].id); 
                     $('#edit_upload-photo-img').attr('src', user.photo_url);
                     $('#edit_about').val(htmlSpecialCharsDecode(user.about));
                     $('#edit_user_modal').modal('show');

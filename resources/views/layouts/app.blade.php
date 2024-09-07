@@ -45,6 +45,28 @@
 h1, h2, h3, h4, h5, h6, p, a, span, div {
     font-family: 'Poppins', sans-serif !important; 
 }
+body {
+    background-color: #1c1f21;
+    color: #9a9494;
+   
+}
+.chat-profile__column-title {
+    color: #b4bcc4;
+   
+}
+.app-footer {
+  
+    background: #1c1f21;
+    border-top: 1px solid #c8ced3;
+    color: #dfe5ea;
+   
+}
+.table>:not(caption)>*>* {
+   
+    background-color: #f1f1f1;
+   
+    
+}
 </style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
