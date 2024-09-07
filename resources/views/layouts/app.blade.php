@@ -67,6 +67,29 @@ body {
    
     
 }
+.chat__person-box:first-child {
+   
+    background-color: #1c1f21;
+}
+.chat__person-box:first-child:hover {
+    background-color: #33373a; /* Change this color to whatever you want on hover */
+}
+.chat__area-text {
+    background-color: #1c1818 !important;
+}
+.chat__area-form .emojionearea.emojionearea-inline>.emojionearea-editor {
+    background-color: #2b2b2b;
+   
+    color: #fff;
+}
+.chat__tab-content .tab-pane {
+   
+    background-color: #1e1b1b;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-link.active:focus {
+    background: #1c1919;
+    border-color: #e4eaee #c8ced3 #fff;
+}
 </style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">

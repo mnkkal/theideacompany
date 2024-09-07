@@ -3,9 +3,9 @@
     <div class="chat__area-text">
         <?php if(Auth::user()->hasPermissionTo('can_chat')){ ?>
 
-        <div class="w-100 flex-1 chat__area-form mb-5">
+        <div class="w-100 flex-1 chat__area-form ">
             <!-- Changed input to textarea to allow multiline input -->
-            <textarea id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>"></textarea>
+            <input type="text" id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>">
         </div>
         <div class="flex-1 d-flex chat__area-btn-group">
             <button class="chat__area-media-btn me-2 btn"
