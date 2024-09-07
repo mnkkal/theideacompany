@@ -157,7 +157,7 @@ class ChatRepository extends BaseRepository
                 }
             });
         }
-        $chatList = $chatList->orderBy('cc.created_at', 'desc')->offset($offset)->limit(10)
+        $chatList = $chatList->orderBy('temp.group_id', 'desc')->offset($offset)->limit(10)
             ->get()->keyBy('id');
 
         // TODO : refactor this later
