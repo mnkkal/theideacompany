@@ -90,6 +90,16 @@ body {
     background: #1c1919;
     border-color: #e4eaee #c8ced3 #fff;
 }
+.dropdown-menu {
+    
+    background-color: #1c1919;
+    
+    color: #fff;
+ 
+}
+.dropdown-item {
+    color: #e9dada !important;
+}
 </style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
