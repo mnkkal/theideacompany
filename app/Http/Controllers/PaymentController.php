@@ -91,7 +91,9 @@ class PaymentController extends Controller
     }
     public function store2(Request $request)
     {
+       
         $subplan = Subscription::where('id', $request->subscription_plan_id)->first();
+       
         $orderData = [
             'receipt'         =>Str::uuid()->toString(),
             'amount'          =>  $subplan->price * 100, 
