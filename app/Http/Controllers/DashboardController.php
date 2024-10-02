@@ -135,11 +135,22 @@ class DashboardController extends Controller
        
         return view('dashboards.employer', compact('applications'));
     }
-    public function welcomeDashboard()
+    public function welcomeDashboard(Request $request)
     {
         $products = Subscription::all();
-
+        
         return view('dashboards.welcome', compact('products'));
+    }
+    public function productsDashboard(Request $request)
+    {
+        $products = Subscription::all();
+       
+            return response()->json([
+                'success' => true,
+                'message' => 'Products retrieved successfully',
+                'data' => $products
+            ]);
+       
     }
     public function job(Request $request)
     {

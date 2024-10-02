@@ -48,7 +48,7 @@
                 <label for="subscription_plan_id">Plan Name:</label>
                 <input type="text" name="subscription_plan_name" value="{{$subplan->name}}" disabled>
 
-                <input type="hidden" name="subscription_plan_id" id="subscription_plan_id" value="{{$subplan->name}}">
+                <input type="hidden" name="subscription_plan_id" id="subscription_plan_id" value="{{$subplan->id}}">
                 <label for="email">Amount(Inr):</label>
                 <input type="number" name="price" value="{{$subplan->price}}" disabled>
                 <label for="email">Name:</label>

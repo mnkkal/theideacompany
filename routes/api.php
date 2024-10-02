@@ -11,6 +11,8 @@ use App\Http\Controllers\API\UserAPIController;
 use Illuminate\Broadcasting\BroadcastController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,8 @@ Route::post('/register', [AuthAPIController::class, 'register']);
 Route::post('password/reset', [PasswordResetController::class, 'sendResetPasswordLink']);
 Route::post('password/update', [PasswordResetController::class, 'reset']);
 Route::get('activate', [AuthAPIController::class, 'verifyAccount']);
-
+Route::post('/payment', [PaymentController::class, 'store2']);
+Route::get('/products', [DashboardController::class, 'productsDashboard']);
 Route::middleware(['auth:api', 'user.activated'])->group(function () {
     Route::post('broadcasting/auth', [BroadcastController::class, 'authenticate']);
     Route::get('logout', [AuthAPIController::class, 'logout']);
