@@ -36,6 +36,8 @@ Route::post('password/reset', [PasswordResetController::class, 'sendResetPasswor
 Route::post('password/update', [PasswordResetController::class, 'reset']);
 Route::get('activate', [AuthAPIController::class, 'verifyAccount']);
 Route::post('/payment', [PaymentController::class, 'store2']);
+Route::any('payment/success', [PaymentController::class, 'success2']);
+Route::any('payment/failure', [PaymentController::class, 'failure2']);
 Route::get('/products', [DashboardController::class, 'productsDashboard']);
 Route::middleware(['auth:api', 'user.activated'])->group(function () {
     Route::post('broadcasting/auth', [BroadcastController::class, 'authenticate']);
