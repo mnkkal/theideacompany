@@ -195,9 +195,9 @@ class PaymentController extends Controller
                 'amount' => $orderData['amount']/100 ?? null,
             ]);
            
-            return view('success');
+            return redirect()->url('https://st.curvemetrics.in/checkout/thankyou.html');
         } catch (\Exception $e) {
-            return redirect()->route('payment.failure');
+            return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
         }
     }
     public function success2(Request $request)
