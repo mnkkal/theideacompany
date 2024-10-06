@@ -195,9 +195,9 @@ class PaymentController extends Controller
                 'amount' => $orderData['amount']/100 ?? null,
             ]);
            
-            return redirect()->url('https://st.curvemetrics.in/checkout/thankyou.html');
+            return view('success');
         } catch (\Exception $e) {
-            return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
+            return redirect()->route('payment.failure');
         }
     }
     public function success2(Request $request)
@@ -236,19 +236,11 @@ class PaymentController extends Controller
                 'amount' => $orderData['amount']/100 ?? null,
             ]);
            
-            return response()->json([
-                'success' => true,
-                'message' => 'Payment successful',
-                'order' => $order,
-                'transaction' => $request->razorpay_payment_id,
-            ]);
+            return redirect()->url('https://st.curvemetrics.in/checkout/thankyou.html');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Payment verification failed',
-                'error' => $e->getMessage()
-            ], 500);
+            return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
         }
+        
     }
     public function failure()
     {
@@ -256,10 +248,6 @@ class PaymentController extends Controller
     }
     public function failure2()
     {
-        return response()->json([
-            'success' => false,
-            'message' => 'Payment verification failed',
-            
-        ], 500);
+        return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
     }
 }
