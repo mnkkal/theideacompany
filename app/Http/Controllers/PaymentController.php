@@ -202,22 +202,20 @@ class PaymentController extends Controller
     }
     public function success2(Request $request)
     {
-        
-       try {
+        try {
             $attributes = [
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature
+                'razorpay_signature' => $request->razorpay_signature,
             ];
 
             $this->razorpay->utility->verifyPaymentSignature($attributes);
             $orderData = $this->razorpay->order->fetch($request->razorpay_order_id);
-            // Update order status to 'paid'
             $order = Order::where('razorpay_order_id', $request->razorpay_order_id)->first();
             if ($order) {
                 $order->update(['status' => 'paid']);
             }
-            $user = User::where('email', $orderData['notes']['email'])->first();
+            $user = User::where('email', $orderData['notes']['email'] ?? null)->first();
             RazorpayTransaction::create([
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
@@ -226,28 +224,27 @@ class PaymentController extends Controller
                 'email' => $orderData['notes']['email'] ?? null,
                 'contact' => $orderData['notes']['contact'] ?? null,
                 'address' => $orderData['notes']['address'] ?? null,
-                'amount' => $orderData['amount']/100,
+                'amount' => $orderData['amount'] / 100, 
             ]);
             Transaction::create([
                 'user_id' => $user->id ?? null,
                 'subscription_plan_id' => $orderData['notes']['subscription_plan_id'] ?? null,
-                'ref'=> $request->razorpay_payment_id ?? null,
-                'status'=>'successful',
-                'amount' => $orderData['amount']/100 ?? null,
+                'ref' => $request->razorpay_payment_id ?? null,
+                'status' => 'successful',
+                'amount' => $orderData['amount'] / 100 ?? null, 
             ]);
-           
-            return redirect()->url('https://st.curvemetrics.in/checkout/thankyou.html');
+            return redirect()->to('https://theideacompany.io/checkout/thankyou.html');
         } catch (\Exception $e) {
-            return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
+            return redirect()->to('https://theideacompany.io/checkout/failed.html');
         }
-        
     }
+
     public function failure()
     {
         return view('failure');
     }
     public function failure2()
     {
-        return redirect()->url('https://st.curvemetrics.in/checkout/failed.html');
+        return redirect()->to('https://theideacompany.io/checkout/failed.html');
     }
 }
