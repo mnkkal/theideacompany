@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ mix('assets/css/coreui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/icheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datetime-picker.css') }}"/>
-    <link rel="stylesheet" href="{{ mix('assets/css/jquery.toast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery.toast.min.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="{{ mix('assets/js/jquery.min.js') }}"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
@@ -31,9 +31,9 @@
     <link rel="stylesheet" href="{{ mix('assets/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/emojionearea.min.css') }}">
     @yield('page_css')
-    <link rel="stylesheet" href="{{ mix('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @yield('css')
-    <link rel="stylesheet" href="{{ mix('assets/css/custom-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-style.css') }}">
 
 </head>
 <style>
