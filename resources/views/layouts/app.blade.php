@@ -16,7 +16,7 @@
     <!-- Bootstrap 4.1.3 -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ mix('assets/css/coreui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/coreui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/icheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datetime-picker.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.toast.min.css') }}">
@@ -28,7 +28,7 @@
     @endif
     @livewireStyles
     @routes
-    <link rel="stylesheet" href="{{ mix('assets/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/emojionearea.min.css') }}">
     @yield('page_css')
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
