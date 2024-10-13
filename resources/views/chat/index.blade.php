@@ -3,6 +3,91 @@
     {{ __('messages.conversations') }}
 @endsection
 @section('page_css')
+<style>
+body {
+    background-color: #000 !important;
+}
+
+.header-fixed .app-header {
+    background-color: #000 !important;
+}
+
+.app-footer {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__people-wrapper-header {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__search-wrapper {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__tab-content .tab-pane {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__tab-nav .nav-item a.active,
+.chat__tab-nav .nav-item a.active:focus {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__person-box:first-child {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+/* Hover effect for person box */
+.chat__person-box:first-child:hover {
+    background-color: #1c1c1c !important;
+    color: white !important;
+}
+
+.chat-conversation__sender {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__area-wrapper {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__area-header {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat__area-text {
+    background-color: #000 !important;
+    color: gray !important;
+}
+
+.chat-conversation__receiver .chat-conversation__bubble {
+    background-color: #261c3f !important;
+    color: #fff !important;
+    border-radius: 0 15px 15px 15px;
+}
+
+/* Hover effect for receiver bubble */
+.chat-conversation__receiver .chat-conversation__bubble:hover {
+    background-color: #3e2768 !important;
+    color: #ffffff !important;
+}
+
+/* Hover effect for buttons or other interactive elements */
+button:hover, a:hover {
+    background-color: #333 !important;
+    color: white !important;
+}
+</style>
+
     <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
     <link rel="stylesheet" href="{{ asset('css/yBox.min.css') }}">
     <link rel="stylesheet" href="{{ mix('assets/css/video-js.css') }}">

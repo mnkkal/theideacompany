@@ -54,14 +54,18 @@
         </a>
     </li>
 @else
-<li class="nav-item {{ Request::is('joblist*') ? 'active' : '' }}">
-        <a class="nav-link {{ Request::is('joblist*') ? 'active' : '' }}" href="{{ route('joblist.index') }}">
-        <i class="fa fa-tasks me-4" aria-hidden="true"></i>
-            <span>{{ __('Jobs') }}</span>
-        </a>
-    </li>
+    @can('job_list')
 
 
+    <li class="nav-item {{ Request::is('joblist*') ? 'active' : '' }}">
+            <a class="nav-link {{ Request::is('joblist*') ? 'active' : '' }}" href="{{ route('joblist.index') }}">
+            <i class="fa fa-tasks me-4" aria-hidden="true"></i>
+                <span>{{ __('Jobs') }}</span>
+            </a>
+        </li>
+
+
+     @endcan
 @endcan
 @can('manage-job-applications')
     <li class="nav-item {{ Request::is('job-applications*') ? 'active' : '' }}">
