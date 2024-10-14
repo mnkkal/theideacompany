@@ -102,7 +102,7 @@ class PaymentController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'contact' => $request->contact,
-                'address' => $request->address,
+                'address' => $request->address??'Nagpur',
                 'subscription_plan_id' => $request->subscription_plan_id,
             ]
         ];
@@ -223,7 +223,7 @@ class PaymentController extends Controller
                 'name' => $orderData['notes']['name'] ?? null,
                 'email' => $orderData['notes']['email'] ?? null,
                 'contact' => $orderData['notes']['contact'] ?? null,
-                'address' => $orderData['notes']['address'] ?? null,
+                'address' => $orderData['notes']['address'] ?? 'Nagpur',
                 'amount' => $orderData['amount'] / 100, 
             ]);
             Transaction::create([
@@ -234,7 +234,8 @@ class PaymentController extends Controller
                 'amount' => $orderData['amount'] / 100 ?? null, 
             ]);
             return redirect()->to('https://theideacompany.io/checkout/thankyou.html');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return redirect()->to('https://theideacompany.io/checkout/failed.html');
         }
     }
