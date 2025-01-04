@@ -21,7 +21,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         //dd($user);
-       
+
         if($user->hasRole('Admin')){
             return $this->superAdminDashboard($request);
         }else if ($user->hasRole('Investor')){
@@ -33,7 +33,7 @@ class DashboardController extends Controller
         }else if ($user->hasRole('Employer')){
             return $this->employerDashboard($request);
         }else{
-            return $this->welcomeDashboard();
+            return $this->welcomeDashboard($request);
         }
     }
     protected function superAdminDashboard()
@@ -49,12 +49,12 @@ class DashboardController extends Controller
         $income = Transaction::whereMonth('created_at', $currentMonth)->sum('amount');
 
         return view('dashboards.super_admin', compact('userCount', 'roles', 'transactionCount', 'income'));
-       
+
     }
 
     protected function investorDashboard($request)
     {
-       
+
         $searchTerm = $request->input('search');
         $selectedSector = $request->input('sector');
         $query = Investor::where('sector','!=', null)
@@ -69,7 +69,7 @@ class DashboardController extends Controller
                   ->orWhere('sector', 'like', '%' . $search . '%');
             });
         }
-        
+
         $pitches = $query->get();
         $sectors = [
             'Financial services',
@@ -105,8 +105,8 @@ class DashboardController extends Controller
         }
 
         $pitches = $query->get();
-       
-       
+
+
 
         return view('dashboards.startup', compact('pitches'));
     }
@@ -114,9 +114,9 @@ class DashboardController extends Controller
    {
     $searchTerm = $request->input('search');
 
-   
+
     $jobs = Job::query()
-        ->where('apply_by', '>=', now()) 
+        ->where('apply_by', '>=', now())
         ->when($searchTerm, function ($query, $searchTerm) {
             return $query->where('job_post', 'LIKE', "%{$searchTerm}%")
                          ->orWhere('company_name', 'LIKE', "%{$searchTerm}%")
@@ -130,35 +130,35 @@ class DashboardController extends Controller
 
     protected function employerDashboard()
     {
-      
+
         $applications = JobApplication::with('job')->get();
-       
+
         return view('dashboards.employer', compact('applications'));
     }
     public function welcomeDashboard(Request $request)
     {
         $products = Subscription::all();
-        
+
         return view('dashboards.welcome', compact('products'));
     }
     public function productsDashboard(Request $request)
     {
         $products = Subscription::all();
-       
+
             return response()->json([
                 'success' => true,
                 'message' => 'Products retrieved successfully',
                 'data' => $products
             ]);
-       
+
     }
     public function job(Request $request)
     {
      $searchTerm = $request->input('search');
- 
-    
+
+
      $jobs = Job::query()
-         ->where('apply_by', '>=', now()) 
+         ->where('apply_by', '>=', now())
          ->when($searchTerm, function ($query, $searchTerm) {
              return $query->where('job_post', 'LIKE', "%{$searchTerm}%")
                           ->orWhere('company_name', 'LIKE', "%{$searchTerm}%")
@@ -166,7 +166,7 @@ class DashboardController extends Controller
                           ->orWhere('job_type', 'LIKE', "%{$searchTerm}%");
          })
          ->paginate(10);
- 
+
      return view('dashboards.employee', compact('jobs'));
      }
 }

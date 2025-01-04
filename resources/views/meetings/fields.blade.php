@@ -18,7 +18,7 @@
     {!! Form::text('duration', isset($meeting) ? $meeting->duration : null, ['class' => 'form-control login-group__input', 'required', 'onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")','placeholder'=>__('messages.meeting.meeting_duration')]) !!}
 </div>
 
-<div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-3 login-group__sub-title">
+ <div class="form-group col-sm-6 col-md-6 col-lg-6 col-xl-3 login-group__sub-title">
     {!! Form::label('members',__('messages.meeting.staff_list').':')!!}<span class="red">*</span>
     {!! Form::select('members[]', $users, isset($members) ? $members : null, ['class' => 'form-control members', 'multiple', 'required']) !!}
 </div>

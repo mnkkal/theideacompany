@@ -1,11 +1,13 @@
 
 <script id="tmplChatSendArea" type="text/x-jsrender">
-    <div class="chat__area-text">
+    <div class="chat__area-text" style="background:#000 !important">
         <?php if(Auth::user()->hasPermissionTo('can_chat')){ ?>
 
         <div class="w-100 flex-1 chat__area-form ">
             <!-- Changed input to textarea to allow multiline input -->
-            <input type="text" id="textMessage" class="txtMessage" placeholder="<?php echo __('messages.placeholder.type_msg') ?>">
+            <textarea type="text" id="textMessage" class="txtMessage" style="min-height="0 !important"
+          placeholder="<?php echo __('messages.placeholder.type_msg') ?>" 
+          rows="1"  style="overflow:hidden"></textarea>
         </div>
         <div class="flex-1 d-flex chat__area-btn-group">
             <button class="chat__area-media-btn me-2 btn"

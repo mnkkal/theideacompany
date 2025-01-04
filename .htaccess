@@ -21,4 +21,5 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    php_value memory_limit 2G 
 </IfModule>

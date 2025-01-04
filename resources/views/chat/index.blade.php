@@ -4,6 +4,11 @@
 @endsection
 @section('page_css')
 <style>
+.emojionearea .emojionearea-editor {
+   
+    min-height: 4em !important;
+   
+}
 body {
     background-color: #000 !important;
 }
@@ -329,5 +334,5 @@ button:hover, a:hover {
         let groupMembers = []
         let checkShowNameChat = "{{ checkShowNameChat() }}"
     </script>
-    <script src="{{ mix('assets/js/chat.js') }}"></script>
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
 @endsection

@@ -40,7 +40,10 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">
+                            <script>
+                                window.location.href = "{{ route('conversations') }}";
+                            </script>
+                            {{-- <div class="row">
                                 @foreach($products as $product)
                                     <div class="col-md-6">
                                         <div class="product">
@@ -55,7 +58,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
+                            </div> --}}
                             <div class="pull-right me-3">
                                 <!-- Pagination or other content here -->
                             </div>

@@ -79,7 +79,7 @@ class MeetingRepository extends BaseRepository
 
             $startTime = $data['start_time'];
             $data['time_zone'] = getTimeZone()[$data['time_zone']];
-            $zoom = $this->updateZoomMeeting($data,$zoomMeeting->meeting_id);
+           // $zoom = $this->updateZoomMeeting($data,$zoomMeeting->meeting_id);
             $data['created_by'] = Auth::id();
             $data['start_time'] = Carbon::parse($startTime)->format('Y-m-d H:i:s');
 
@@ -100,7 +100,7 @@ class MeetingRepository extends BaseRepository
     {
         try {
             $zoomMeeting = ZoomMeeting::findOrFail($id);
-            $this->destroyZoomMeeting($zoomMeeting->meeting_id);
+            //$this->destroyZoomMeeting($zoomMeeting->meeting_id);
             $zoomMeeting->members()->detach();
             $zoomMeeting->delete();
 

@@ -244,6 +244,15 @@ class PaymentController extends Controller
     {
         return view('failure');
     }
+      public function callbackGmeet()
+    {
+        return response()->json([
+                'success' => true,
+                'message' => 'successfully',
+
+            ]);
+    }
+    
     public function failure2()
     {
         return redirect()->to('https://theideacompany.io/checkout/failed.html');

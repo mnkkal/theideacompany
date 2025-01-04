@@ -126,7 +126,7 @@
                             </form>
                         </div>
                         <div class="col-md-3">
-                            <a href="#" class="btn btn-info mr-2">Chat with our team to invest</a>
+                            <a href="{{ route('conversations') }}" class="btn btn-info mr-2">Chat with our team to invest</a>
                         </div>
                     </div>
                 </div>

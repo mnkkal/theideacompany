@@ -19,7 +19,7 @@
                         </div>
                         <div class="card-body">
                             @include('layouts.errors')
-                            <form method="post" action="{{ route('meetings.store') }}" id="meetingForm">
+                            <form method="post" action="{{ route('create-gmeet') }}" id="meetingForm">
                                 {{ csrf_field() }}
                                 <div class="row">
                                 @include('meetings.fields')

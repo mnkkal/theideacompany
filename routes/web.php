@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\AuthController;
@@ -22,6 +23,9 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ParentGroupController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoogleMeetController;
+
+
 
 
 
@@ -38,7 +42,7 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/create-google-meet', [GoogleMeetController::class, 'createGoogleMeetEvent']);
 Route::get('/', function () {
     return view('home.index');
 })->name('home');
@@ -197,5 +201,10 @@ Route::get('payment/{id}', [PaymentController::class, 'index'])->name('payment')
 Route::post('payment', [PaymentController::class, 'store']);
 Route::any('payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::any('payment/failure', [PaymentController::class, 'failure'])->name('payment.failure');
+
+Route::any('/create-gmeet', [GoogleMeetController::class, 'createGoogleMeetEvent'])->name('create-gmeet');
+Route::get('/callback', [GoogleMeetController::class, 'oauthCallback'])->name('oauthCallback');
+
+
 
 

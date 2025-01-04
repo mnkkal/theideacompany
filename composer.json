@@ -20,6 +20,7 @@
         "berkayk/onesignal-laravel": "^1.10",
         "doctrine/dbal": "^3.5",
         "embed/embed": "^4.3",
+        "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.2",
         "infyomlabs/laravel-generator": "^6.0",
         "intervention/image": "^2.5",

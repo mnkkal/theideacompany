@@ -45,7 +45,6 @@
 h1, h2, h3, h4, h5, h6, p, a, span, div {
     font-family: 'Poppins', sans-serif !important; 
 }
-
 </style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
@@ -221,6 +220,7 @@ h1, h2, h3, h4, h5, h6, p, a, span, div {
 <script src="{{ mix('assets/js/set_user_status.js') }}"></script>
 <script src="{{ mix('assets/js/set-user-on-off.js') }}"></script>
 <script src="{{mix('assets/js/profile.js')}}"></script>
+
 @livewireScripts
 @stack('scripts')
 @yield('scripts')

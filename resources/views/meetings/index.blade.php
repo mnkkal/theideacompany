@@ -23,8 +23,8 @@
                             @if(isZoomTokenExpire())
 
                             <div class="filter-container margin-left-sm">
-                                <a type="button" class="btn btn-success ml-3" href="{{route('zoom.connect')}}">
-                                    {{ __('messages.new_keys.connect_with_zoom') }}
+                                <a type="button" class="btn btn-success ml-3" href="https://calendar.google.com/">
+                                    {{ __('Connect with Gmeet') }}
                                 </a>
                             </div>
                         @endif

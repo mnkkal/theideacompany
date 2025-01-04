@@ -69,7 +69,7 @@ $(document).ready(function () {
             },
             {
                 data: function (row) {
-                    let startBtn = '<a href="' + row.meta.start_url + '" target="_blank" class="btn btn-primary btn-sm m-1 zoom-video"><i class="fa fa-video-camera"></i></a>';
+                    let startBtn = '<a href="' + row.meeting_id + '" target="_blank" class="btn btn-primary btn-sm m-1 zoom-video"><i class="fa fa-video-camera"></i></a>';
                     let editBtn = '<a title="Edit" class="index__btn btn btn-ghost-success btn-sm edit-btn mr-1" href="' +
                        route('meetings.edit',row.id) + '">' +
                         '<i class="cui-pencil action-icon"></i>' +
